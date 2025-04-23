@@ -21,6 +21,7 @@ in
       ./hardware-configuration.nix
       ./modules/virtualization.nix
       ./modules/nvidia.nix
+      ./modules/desktop.nix
     ];
 
 
@@ -142,22 +143,22 @@ in
 #░▀▀░░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░░
 
   # Enable SDDM & Hyprland
-  services.xserver.displayManager.gdm.enable = true;
-  services.gnome.gnome-keyring.enable = true;
-  services.desktopManager.cosmic.xwayland.enable = true;
+#  services.xserver.displayManager.gdm.enable = true;
+#  services.gnome.gnome-keyring.enable = true;
+#  services.desktopManager.cosmic.xwayland.enable = true;
 
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-    xwayland.enable = true;
-  };
+#  programs.hyprland = {
+#    enable = true;
+#    withUWSM = true;
+#    xwayland.enable = true;
+#  };
 
-  environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSOR = "1";
-    NIXOS_OZONE_WL = "1";
-    CUDA_HOME = "${pkgs.cudaPackages.cudatoolkit}";
-    CUDA_MODULE_LOADING = "LAZY";
-  };
+#  environment.sessionVariables = {
+#    WLR_NO_HARDWARE_CURSOR = "1";
+#    NIXOS_OZONE_WL = "1";
+#    CUDA_HOME = "${pkgs.cudaPackages.cudatoolkit}";
+#    CUDA_MODULE_LOADING = "LAZY";
+#  };
 
 
 
