@@ -5,9 +5,15 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    stylix.url = "github:danth/stylix";
+    #catppuccin.url = "github:catppuccin/nix";
+    #home-manager = {
+    #  url = "github:nix-community/home-manager";
+    #  inputs.nixpkgs.follows = "nixpkgs";
+    #};
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, stylix, ... } @inputs:
 
  let
  system = "x86_64-linux"; # change to whatever your system should be.
@@ -33,10 +39,24 @@
         inherit pkgs-unstable;
       };
       modules = [
+         #catppuccin.nixosModules.catppuccin
+
+         #home-manager.nixosModules.home-manager
+         #{
+          # if you use home-manager
+         # home-manager.users.nicole = {
+         #   imports = [
+         #     ./home.nix
+         #     catppuccin.homeManagerModules.catppuccin
+         #   ];
+         # };
+        #}
         ./configuration.nix
         {nixpkgs.overlays = [inputs.hyprpanel.overlay];}
+        stylix.nixosModules.stylix
       ];
     };
+
     
     packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
     packages.x86_64-linux.default = self.packages.x86_64-linux.hello;

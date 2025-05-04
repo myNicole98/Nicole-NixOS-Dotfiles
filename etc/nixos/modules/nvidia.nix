@@ -16,19 +16,13 @@
 
   hardware = {
     nvidia = {
-      open = false;
+      open = true;
       gsp.enable = config.hardware.nvidia.open; 
-      powerManagement.enable = true; 
-      nvidiaSettings = false;
+      powerManagement.enable = true;
+      powerManagement.finegrained = false;
+      nvidiaSettings = true;
 
       package = config.boot.kernelPackages.nvidiaPackages.latest;
-#      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-#        version = "575.51.02";
-#        sha256_64bit = "sha256-XZ0N8ISmoAC8p28DrGHk/YN1rJsInJ2dZNL8O+Tuaa0=";
-#        openSha256 = "sha256-NQg+QDm9Gt+5bapbUO96UFsPnz1hG1dtEwT/g/vKHkw=";
-#        useSettings = false;
-#        usePersistenced = false;
-#      };
       videoAcceleration = true;
     };
   };

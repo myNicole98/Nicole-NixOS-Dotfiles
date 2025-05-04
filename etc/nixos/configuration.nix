@@ -22,7 +22,10 @@ in
       ./modules/virtualization.nix
       ./modules/nvidia.nix
       ./modules/desktop.nix
+      ./modules/ld-fix.nix
     ];
+
+
 
 
 #░█▀▄░█▀█░█▀█░▀█▀░█░░░█▀█░█▀█░█▀▄░█▀▀░█▀▄
@@ -34,6 +37,9 @@ in
   services.blueman.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  services.udev.extraRules = ''
+        KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
+  '';
 
   boot = {
     plymouth = {
@@ -43,6 +49,7 @@ in
     # Enable "Silent Boot"
     consoleLogLevel = 0;
     initrd.verbose = false;
+    kernelModules = ["i2c-dev"];
     kernelParams = [
       "quiet"
       "splash"
@@ -56,7 +63,7 @@ in
     kernelPackages = pkgs.linuxPackages_latest;
 
     loader.timeout = 0;
-    loader.systemd-boot.consoleMode = "max";
+    loader.systemd-boot.consoleMode = "auto";
   };
 
 
@@ -73,6 +80,7 @@ in
     nssmdns4 = true;
     openFirewall = true;
   };
+  networking.firewall = { enable = false; }; 
 
 
 #░█░░░█▀█░█▀▀░█▀█░█░░░█▀▀
@@ -111,11 +119,12 @@ in
   users.users.nicole = {
     isNormalUser = true;
     description = "Nicole";
-    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" "i2c"];
     packages = with pkgs; [];
   };
 
-
+  stylix.enable = true;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
 
 
 #░█░█░█▀█░█▀▀░█▀▄░█▀▀░█▀▀
@@ -131,35 +140,14 @@ in
 #░█░░░█░█░░░█▀▀░░█░░▄▀▄
 #░▀▀▀░▀▀░░░░▀░░░▀▀▀░▀░▀
 
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs ; [
-    gcc-unwrapped
-  ];
-
-
-
-#░█▀▄░█▀▀░█▀▀░█░█░▀█▀░█▀█░█▀█
-#░█░█░█▀▀░▀▀█░█▀▄░░█░░█░█░█▀▀
-#░▀▀░░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░░
-
-  # Enable SDDM & Hyprland
-#  services.xserver.displayManager.gdm.enable = true;
-#  services.gnome.gnome-keyring.enable = true;
-#  services.desktopManager.cosmic.xwayland.enable = true;
-
-#  programs.hyprland = {
-#    enable = true;
-#    withUWSM = true;
-#    xwayland.enable = true;
-#  };
-
-#  environment.sessionVariables = {
-#    WLR_NO_HARDWARE_CURSOR = "1";
-#    NIXOS_OZONE_WL = "1";
-#    CUDA_HOME = "${pkgs.cudaPackages.cudatoolkit}";
-#    CUDA_MODULE_LOADING = "LAZY";
-#  };
-
+  #programs.nix-ld.enable = true;
+  #programs.nix-ld.libraries = with pkgs ; [
+  #  gcc-unwrapped
+  #  stdenv.cc.cc.lib
+  #  libz
+  #  cairo
+  #  pango
+  #];
 
 
 #░█░█░█▀▄░█▀▀
@@ -180,10 +168,12 @@ in
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
+    audio.enable = true;
+    wireplumber.enable = true;
+    pulse.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
+    #jack.enable = true;
   };
 
 
@@ -203,6 +193,7 @@ in
     htop
     cowsay
     starship
+    cava
 
     # FILES #
     nemo-with-extensions
@@ -245,6 +236,7 @@ in
     ffmpeg
     mpv
     jellyfin-media-player
+    resonance
 
     # INTERNET #    
     floorp
@@ -260,13 +252,13 @@ in
     vscode-fhs
     nixd
     nil
-    python312
-    python312Packages.pip
+    #python312
+    #python312Packages.pip
     zed-editor
     gnumake
     cmake
     ninja
-    python3
+    #python3
     libgcc
     gcc
 
@@ -283,10 +275,12 @@ in
     playerctl
     adw-gtk3
     remmina
+    deskreen
 
     # UTILS #
     monitorets
     xdg-user-dirs
+    brightnessctl
     
     # CUDA #
     cudaPackages.cudatoolkit
@@ -295,6 +289,9 @@ in
 
     # AUDIO #
     helvum
+
+
+
     
   ];
  
