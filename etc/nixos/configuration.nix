@@ -37,9 +37,6 @@ in
   services.blueman.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  services.udev.extraRules = ''
-        KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
-  '';
 
   boot = {
     plymouth = {
@@ -49,7 +46,6 @@ in
     # Enable "Silent Boot"
     consoleLogLevel = 0;
     initrd.verbose = false;
-    kernelModules = ["i2c-dev"];
     kernelParams = [
       "quiet"
       "splash"
@@ -119,7 +115,7 @@ in
   users.users.nicole = {
     isNormalUser = true;
     description = "Nicole";
-    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" "i2c"];
+    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" ];
     packages = with pkgs; [];
   };
 
@@ -242,9 +238,11 @@ in
     floorp
     telegram-desktop
     element-desktop
-    discord
+    (discord.override {
+      # withOpenASAR = true; # can do this here too
+      withVencord = true;
+    })
     mailspring
-    wasistlos
     teams-for-linux
     qbittorrent
     
@@ -341,6 +339,7 @@ in
       BROWSER = "firefox";
       TERMINAL = "kitty";
       LIBVIRT_DEFAULT_URI = "qemu:///system";
+      NIXOS_OZONE_WL = "1";
     };
     #etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool.json".source = ./50-limit-free-buffer-pool.json;
   };
