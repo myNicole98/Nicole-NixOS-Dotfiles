@@ -62,13 +62,9 @@ in
       package = pkgs.qemu_kvm;
       runAsRoot = true;
       swtpm.enable = true;
-      # Configure OVMF (UEFI firmware for virtual machines)
       ovmf = {
         enable = true;
-        packages = [(pkgs.OVMF.override {
-          secureBoot = false;  # Disable Secure Boot for the VM firmware
-          tpmSupport = true;    # Enable TPM support
-        }).fd];
+        packages = [ pkgs.OVMFFull.fd ];
       };
     };
   };

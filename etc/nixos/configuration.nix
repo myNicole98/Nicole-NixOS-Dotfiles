@@ -7,6 +7,7 @@
 
 
 let
+  # TO-DO
   user = "nicole";
 in
 
@@ -24,8 +25,6 @@ in
       ./modules/desktop.nix
       ./modules/ld-fix.nix
     ];
-
-
 
 
 #░█▀▄░█▀█░█▀█░▀█▀░█░░░█▀█░█▀█░█▀▄░█▀▀░█▀▄
@@ -115,7 +114,7 @@ in
   users.users.nicole = {
     isNormalUser = true;
     description = "Nicole";
-    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" "cdrom" ];
     packages = with pkgs; [];
   };
 
@@ -129,21 +128,6 @@ in
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.cudaSupport = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-
-
-#░█░░░█▀▄░░░█▀▀░▀█▀░█░█
-#░█░░░█░█░░░█▀▀░░█░░▄▀▄
-#░▀▀▀░▀▀░░░░▀░░░▀▀▀░▀░▀
-
-  #programs.nix-ld.enable = true;
-  #programs.nix-ld.libraries = with pkgs ; [
-  #  gcc-unwrapped
-  #  stdenv.cc.cc.lib
-  #  libz
-  #  cairo
-  #  pango
-  #];
 
 
 #░█░█░█▀▄░█▀▀
@@ -239,7 +223,6 @@ in
     telegram-desktop
     element-desktop
     (discord.override {
-      # withOpenASAR = true; # can do this here too
       withVencord = true;
     })
     mailspring
@@ -250,13 +233,10 @@ in
     vscode-fhs
     nixd
     nil
-    #python312
-    #python312Packages.pip
     zed-editor
     gnumake
     cmake
     ninja
-    #python3
     libgcc
     gcc
 
@@ -265,6 +245,7 @@ in
     lutris
     protonup-qt
     gdlauncher-carbon
+    adwsteamgtk
 
     # OTHERS #
     home-manager
@@ -287,12 +268,12 @@ in
 
     # AUDIO #
     helvum
-
-
-
-    
   ];
  
+
+  # ISO mounting utils #
+  programs.cdemu.enable = true;
+
   # OLLAMA #
   services.ollama = {
     enable = true;
@@ -332,7 +313,8 @@ in
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
   programs.gamemode.enable =  true;
-  
+ 
+  # DEFAULTS #
   environment = {
     sessionVariables = {
       EDITOR = "nvim";
@@ -344,7 +326,7 @@ in
     #etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool.json".source = ./50-limit-free-buffer-pool.json;
   };
 
-
+  # Fonts with emojis uwu #
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
 
   system.stateVersion = "24.11";
