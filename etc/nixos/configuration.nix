@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, lib, ... }:
+{ config, pkgs, pkgs-unstable, lib, inputs, ... }:
 
 
 #░█░█░█▀▀░█▀▀░█▀▄░░░█░█░█▀█░█▀▄░▀█▀░█▀█░█▀▄░█░░░█▀▀░█▀▀
@@ -55,7 +55,7 @@ in
       "udev.log_priority=3"
     ];
 
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_zen;
 
     loader.timeout = 0;
     loader.systemd-boot.consoleMode = "auto";
@@ -118,9 +118,6 @@ in
     packages = with pkgs; [];
   };
 
-  stylix.enable = true;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-
 
 #░█░█░█▀█░█▀▀░█▀▄░█▀▀░█▀▀
 #░█░█░█░█░█▀▀░█▀▄░█▀▀░█▀▀
@@ -182,6 +179,7 @@ in
     nautilus-python
     sushi
     fsearch
+    filezilla
 
     # SCREENSHOTS AND RECORDING #
     grim
@@ -192,12 +190,14 @@ in
 
     # HYPRLAND RELATED #
     hyprpaper
+    swaybg
     pkgs-unstable.hyprlock
     swaylock
     hypridle
     hyprpanel
     hyprpolkitagent
     waybar
+    hyprpanel
     wlogout
     rofi-wayland
     libnotify
@@ -211,6 +211,8 @@ in
     xournalpp
     gnome-text-editor
     gnome-calculator
+    simple-scan
+    anydesk
 
     # MEDIA #
     ffmpeg
@@ -220,6 +222,8 @@ in
 
     # INTERNET #    
     floorp
+    brave
+    grayjay
     telegram-desktop
     element-desktop
     (discord.override {
@@ -329,6 +333,18 @@ in
   # Fonts with emojis uwu #
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.11";
+  
+  system.autoUpgrade = {
+    enable = true;
+    flake = inputs.self.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "-L" # print build logs
+    ];
+  dates = "02:00";
+  randomizedDelaySec = "45min";
+  };
 
 }

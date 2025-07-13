@@ -4,24 +4,19 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-    stylix.url = "github:danth/stylix";
-    #catppuccin.url = "github:catppuccin/nix";
-    #home-manager = {
-    #  url = "github:nix-community/home-manager";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
+    #hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
+    #stylix.url = "github:danth/stylix";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, stylix, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, ... } @inputs:
 
  let
- system = "x86_64-linux"; # change to whatever your system should be.
+ system = "x86_64-linux";
  pkgs-unstable = import nixpkgs-unstable { system = "x86_64-linux"; config.allowUnfree = true; };
  pkgs = import nixpkgs {
    inherit system;
    overlays = [
-     inputs.hyprpanel.overlay
+     #inputs.hyprpanel.overlay
      (final: prev: {
             unstable = nixpkgs-unstable.legacyPackages.${prev.system};
      })
@@ -39,21 +34,9 @@
         inherit pkgs-unstable;
       };
       modules = [
-         #catppuccin.nixosModules.catppuccin
-
-         #home-manager.nixosModules.home-manager
-         #{
-          # if you use home-manager
-         # home-manager.users.nicole = {
-         #   imports = [
-         #     ./home.nix
-         #     catppuccin.homeManagerModules.catppuccin
-         #   ];
-         # };
-        #}
         ./configuration.nix
-        {nixpkgs.overlays = [inputs.hyprpanel.overlay];}
-        stylix.nixosModules.stylix
+        #{nixpkgs.overlays = [inputs.hyprpanel.overlay];}
+        #stylix.nixosModules.stylix
       ];
     };
 

@@ -36,7 +36,7 @@ in
 
     # Add the GPU video and audio to VFIO binding
     extraModprobeConfig = ''options vfio-pci ids=${builtins.concatStringsSep "," vfioIds} 
-                            options kvmfr static_size_mb=64
+                            options kvmfr static_size_mb=128
     '';
     
     # Enable the KVMFR kernel package

@@ -16,9 +16,10 @@
 
   hardware = {
     nvidia = {
+      modesetting.enable = true;
       open = true;
       gsp.enable = config.hardware.nvidia.open; 
-      powerManagement.enable = true;
+      powerManagement.enable = false;
       powerManagement.finegrained = false;
       nvidiaSettings = true;
 
