@@ -4,8 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    #hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
-    #stylix.url = "github:danth/stylix";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, ... } @inputs:
@@ -16,7 +14,6 @@
  pkgs = import nixpkgs {
    inherit system;
    overlays = [
-     #inputs.hyprpanel.overlay
      (final: prev: {
             unstable = nixpkgs-unstable.legacyPackages.${prev.system};
      })
@@ -35,14 +32,7 @@
       };
       modules = [
         ./configuration.nix
-        #{nixpkgs.overlays = [inputs.hyprpanel.overlay];}
-        #stylix.nixosModules.stylix
       ];
     };
-
-    
-    packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-    packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
-
   };
 }

@@ -25,7 +25,7 @@ in
       ./modules/desktop.nix
       ./modules/ld-fix.nix
     ];
-
+  
 
 #░█▀▄░█▀█░█▀█░▀█▀░█░░░█▀█░█▀█░█▀▄░█▀▀░█▀▄
 #░█▀▄░█░█░█░█░░█░░█░░░█░█░█▀█░█░█░█▀▀░█▀▄
@@ -159,7 +159,6 @@ in
 #░█▀▀░█▀█░█░░░█▀▄░█▀█░█░█░█▀▀░▀▀█
 #░▀░░░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀
 
-
   environment.systemPackages = with pkgs; [
     # TERM UTILS #
     kitty
@@ -173,13 +172,18 @@ in
     cava
 
     # FILES #
-    nemo-with-extensions
     gvfs
     nautilus
     nautilus-python
+    nautilus-open-any-terminal
     sushi
+    pandoc
+    texliveFull
     fsearch
     filezilla
+    ffmpegthumbnailer
+    zenity
+    imagemagick
 
     # SCREENSHOTS AND RECORDING #
     grim
@@ -195,35 +199,35 @@ in
     swaylock
     hypridle
     hyprpanel
+    hyprsunset
     hyprpolkitagent
     waybar
     hyprpanel
     wlogout
     rofi-wayland
     libnotify
-    ags
     
     # OFFICE #
     onlyoffice-desktopeditors
     obsidian
-    siyuan
     nextcloud-client
     xournalpp
     gnome-text-editor
     gnome-calculator
     simple-scan
     anydesk
+    gimp
 
     # MEDIA #
     ffmpeg
     mpv
     jellyfin-media-player
-    resonance
+    feishin
+    spotify
 
     # INTERNET #    
     floorp
     brave
-    grayjay
     telegram-desktop
     element-desktop
     (discord.override {
@@ -252,16 +256,17 @@ in
     adwsteamgtk
 
     # OTHERS #
-    home-manager
-    nwg-look
+    #home-manager
     seahorse
     playerctl
     adw-gtk3
     remmina
-    deskreen
+    appimage-run
+    gnomeExtensions.appindicator
 
     # UTILS #
     monitorets
+    gnome-system-monitor
     xdg-user-dirs
     brightnessctl
     
@@ -273,16 +278,18 @@ in
     # AUDIO #
     helvum
   ];
- 
-
+  
   # ISO mounting utils #
   programs.cdemu.enable = true;
+  
+  # KDE Connect
+  programs.kdeconnect.enable = true;
 
   # OLLAMA #
   services.ollama = {
     enable = true;
     acceleration = "cuda";
-    package = pkgs-unstable.ollama;
+    package = pkgs.ollama;
     environmentVariables = {
       CUDA_VISIBLE_DEVICES = "0";
       NVIDIA_VISIBLE_DEVICES = "all";
@@ -290,6 +297,7 @@ in
     };
   };
 
+  /*
   # GTK DARK THEME #
   programs.dconf = {
     enable = true;
@@ -311,7 +319,7 @@ in
       });
     })
   ];
-
+  */
   
   # STEAM #
   programs.steam.enable = true;
@@ -322,7 +330,7 @@ in
   environment = {
     sessionVariables = {
       EDITOR = "nvim";
-      BROWSER = "firefox";
+      BROWSER = "floorp";
       TERMINAL = "kitty";
       LIBVIRT_DEFAULT_URI = "qemu:///system";
       NIXOS_OZONE_WL = "1";
@@ -333,6 +341,14 @@ in
   # Fonts with emojis uwu #
   fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
 
+  services.gvfs.enable = true;
+  programs.dconf.enable = true;
+  services.udev.packages = with pkgs; [ gnome-settings-daemon ];
+
+  environment.pathsToLink = [ "/share/nautilus-python/extensions" ];
+  environment.sessionVariables.NAUTILUS_4_EXTENSION_DIR = "${config.system.path}/lib/nautilus/extensions-4";
+
+  
   system.stateVersion = "25.11";
   
   system.autoUpgrade = {
