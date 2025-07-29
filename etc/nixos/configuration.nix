@@ -297,30 +297,6 @@ in
     };
   };
 
-  /*
-  # GTK DARK THEME #
-  programs.dconf = {
-    enable = true;
-    profiles.user.databases = [{
-      settings = with lib.gvariant; {
-        "org/gnome/desktop/interface" = {
-          color-scheme = "prefer-dark";
-          gtk-theme = "adw-gtk3-dark";
-          };
-        };
-      }];
-    };
-
-  nixpkgs.overlays = [
-    (final: prev:
-    {
-      ags = prev.ags.overrideAttrs (old: {
-        buildInputs = old.buildInputs ++ [ pkgs.libdbusmenu-gtk3 ];
-      });
-    })
-  ];
-  */
-  
   # STEAM #
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
