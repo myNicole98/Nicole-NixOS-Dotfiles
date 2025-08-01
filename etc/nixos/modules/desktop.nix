@@ -4,12 +4,18 @@
 
 {config, pkgs, pkgs-unstable, lib, ... }:
 {
-
+  
   # Enable GDM
   #services.displayManager.gdm.enable = true;
   
   # Enable SDDM
   services.displayManager.sddm.enable = true;
+  environment.systemPackages = with pkgs; [
+     kdePackages.qtmultimedia 
+     libsForQt5.qt5.qtgraphicaleffects
+     sddm-astronaut
+   ];
+  services.displayManager.sddm.theme = "${pkgs.sddm-chili-theme}/share/sddm/themes/chili";
   services.displayManager.sddm.wayland.enable = true;
 
   # Gnome Keyring (for window managers)

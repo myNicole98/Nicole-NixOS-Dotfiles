@@ -24,6 +24,7 @@ in
       ./modules/nvidia.nix
       ./modules/desktop.nix
       ./modules/ld-fix.nix
+      ./modules/programs.nix
     ];
   
 
@@ -153,132 +154,6 @@ in
     #jack.enable = true;
   };
 
-
-
-#░█▀█░█▀█░█▀▀░█░█░█▀█░█▀▀░█▀▀░█▀▀
-#░█▀▀░█▀█░█░░░█▀▄░█▀█░█░█░█▀▀░▀▀█
-#░▀░░░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀
-
-  environment.systemPackages = with pkgs; [
-    # TERM UTILS #
-    kitty
-    neovim
-    wget
-    git
-    fastfetch
-    htop
-    cowsay
-    starship
-    cava
-
-    # FILES #
-    gvfs
-    nautilus
-    nautilus-python
-    nautilus-open-any-terminal
-    sushi
-    pandoc
-    texliveFull
-    fsearch
-    filezilla
-    ffmpegthumbnailer
-    zenity
-    imagemagick
-
-    # SCREENSHOTS AND RECORDING #
-    grim
-    slurp
-    swappy 
-    wl-clipboard
-    obs-studio
-
-    # HYPRLAND RELATED #
-    hyprpaper
-    swaybg
-    pkgs-unstable.hyprlock
-    swaylock
-    hypridle
-    hyprpanel
-    hyprsunset
-    hyprpolkitagent
-    waybar
-    hyprpanel
-    wlogout
-    rofi-wayland
-    libnotify
-    
-    # OFFICE #
-    onlyoffice-desktopeditors
-    obsidian
-    nextcloud-client
-    xournalpp
-    gnome-text-editor
-    gnome-calculator
-    simple-scan
-    anydesk
-    gimp
-
-    # MEDIA #
-    ffmpeg
-    mpv
-    jellyfin-media-player
-    feishin
-    spotify
-
-    # INTERNET #    
-    floorp
-    brave
-    telegram-desktop
-    element-desktop
-    (discord.override {
-      withVencord = true;
-    })
-    mailspring
-    teams-for-linux
-    qbittorrent
-    
-    # DEV #
-    vscode-fhs
-    nixd
-    nil
-    zed-editor
-    gnumake
-    cmake
-    ninja
-    libgcc
-    gcc
-
-    # GAMING #
-    mangohud
-    lutris
-    protonup-qt
-    gdlauncher-carbon
-    adwsteamgtk
-
-    # OTHERS #
-    #home-manager
-    seahorse
-    playerctl
-    adw-gtk3
-    remmina
-    appimage-run
-    gnomeExtensions.appindicator
-
-    # UTILS #
-    monitorets
-    gnome-system-monitor
-    xdg-user-dirs
-    brightnessctl
-    
-    # CUDA #
-    cudaPackages.cudatoolkit
-    cudaPackages.cudnn
-    cudaPackages.cuda_cudart
-
-    # AUDIO #
-    helvum
-  ];
-  
   # ISO mounting utils #
   programs.cdemu.enable = true;
   
@@ -305,7 +180,7 @@ in
   # DEFAULTS #
   environment = {
     sessionVariables = {
-      EDITOR = "nvim";
+      EDITOR = "zed";
       BROWSER = "floorp";
       TERMINAL = "kitty";
       LIBVIRT_DEFAULT_URI = "qemu:///system";
