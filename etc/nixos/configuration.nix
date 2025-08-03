@@ -181,7 +181,7 @@ in
   environment = {
     sessionVariables = {
       EDITOR = "zed";
-      BROWSER = "floorp";
+      BROWSER = "app.zen_browser.zen.desktop";
       TERMINAL = "kitty";
       LIBVIRT_DEFAULT_URI = "qemu:///system";
       NIXOS_OZONE_WL = "1";
