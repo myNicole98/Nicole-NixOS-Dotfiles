@@ -21,10 +21,16 @@
       gsp.enable = config.hardware.nvidia.open; 
       powerManagement.enable = false;
       powerManagement.finegrained = false;
-      nvidiaSettings = true;
+      nvidiaSettings = false;
 
       package = config.boot.kernelPackages.nvidiaPackages.latest;
-      videoAcceleration = true;
+      #package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      #    version = "575.64.03";
+      #    sha256_64bit = "sha256-S7eqhgBLLtKZx9QwoGIsXJAyfOOspPbppTHUxB06DKA=";
+      #    openSha256 = "sha256-SAl1+XH4ghz8iix95hcuJ/EVqt6ylyzFAao0mLeMmMI=";
+      #    usePersistenced = false;
+      #    useSettings = false;
+      #  };
     };
   };
 

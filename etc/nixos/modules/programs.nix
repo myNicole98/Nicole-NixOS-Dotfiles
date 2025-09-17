@@ -5,6 +5,13 @@
 {config, pkgs, pkgs-unstable, lib, ... }:
 
 {
+  
+  # RISKY, REMOVE ASAP ###
+  nixpkgs.config.permittedInsecurePackages = [
+    "qtwebengine-5.15.19"
+  ];
+
+  # Defined Programs
   environment.systemPackages = with pkgs; [
     # TERM UTILS #
     neovim
@@ -12,6 +19,7 @@
     git
     fastfetch
     htop
+    btop-cuda
     cowsay
     starship
     cava
@@ -41,7 +49,6 @@
     hyprpaper
     swaybg
     hyprlock
-    swaylock
     hypridle
     hyprpanel
     hyprsunset
@@ -49,8 +56,10 @@
     waybar
     hyprpanel
     wlogout
-    rofi-wayland
+    rofi
     libnotify
+    wayvnc
+    pkgs-unstable.quickshell
     
     # OFFICE #
     pkgs-unstable.onlyoffice-desktopeditors
@@ -62,7 +71,7 @@
     simple-scan
     anydesk
 
-    # MEDIA EDITORS #
+    # PRODUCTION #
     gimp
     pinta
 
@@ -78,8 +87,10 @@
     element-desktop
     vesktop
     mailspring
+    tutanota-desktop
     teams-for-linux
     qbittorrent
+    rustdesk
     
     # DEV #
     vscode-fhs
@@ -109,17 +120,32 @@
 
     # UTILS #
     monitorets
-    gnome-system-monitor
+    #gnome-system-monitor
+    mission-center
     xdg-user-dirs
     brightnessctl
+    pkgs-unstable.openrgb
+    dmg2img
     
     # CUDA #
     cudaPackages.cudatoolkit
     cudaPackages.cudnn
     cudaPackages.cuda_cudart
 
-    # AUDIO #
+    # AUDIO AND DAW#
     helvum
+    reaper
+    #bitwig-studio
+    #carla
+    yabridge
+    yabridgectl
+    alsa-scarlett-gui
+    qjackctl
+
+    # WINE #
+    wineWowPackages.stable
+    #wineWowPackages.waylandFull
+    winetricks
   ];
 
   # Enable Flaktpak
@@ -127,5 +153,10 @@
   services.flatpak.packages = [
     "org.pitivi.Pitivi"
     "app.zen_browser.zen"
+    "org.blender.Blender"
   ];
+
+
+services.hardware.openrgb.enable = true;
 }
+

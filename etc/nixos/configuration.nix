@@ -25,6 +25,7 @@ in
       ./modules/desktop.nix
       ./modules/ld-fix.nix
       ./modules/programs.nix
+      #./modules/audio.nix
     ];
   
 
@@ -76,7 +77,7 @@ in
     nssmdns4 = true;
     openFirewall = true;
   };
-  networking.firewall = { enable = false; }; 
+  networking.firewall.enable = false;
 
 
 #░█░░░█▀█░█▀▀░█▀█░█░░░█▀▀
@@ -151,7 +152,7 @@ in
     pulse.enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    #jack.enable = true;
+    jack.enable = true;
   };
 
   # ISO mounting utils #
@@ -164,7 +165,7 @@ in
   services.ollama = {
     enable = true;
     acceleration = "cuda";
-    package = pkgs.ollama;
+    package = pkgs-unstable.ollama;
     environmentVariables = {
       CUDA_VISIBLE_DEVICES = "0";
       NVIDIA_VISIBLE_DEVICES = "all";
@@ -213,5 +214,6 @@ in
   dates = "02:00";
   randomizedDelaySec = "45min";
   };
+
 
 }

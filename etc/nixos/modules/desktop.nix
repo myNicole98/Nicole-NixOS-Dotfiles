@@ -10,12 +10,12 @@
   
   # Enable SDDM
   services.displayManager.sddm.enable = true;
-  environment.systemPackages = with pkgs; [
-     kdePackages.qtmultimedia 
-     libsForQt5.qt5.qtgraphicaleffects
-     sddm-astronaut
-   ];
-  services.displayManager.sddm.theme = "${pkgs.sddm-chili-theme}/share/sddm/themes/chili";
+  #environment.systemPackages = with pkgs; [
+  #   kdePackages.qtmultimedia 
+  #   libsForQt5.qt5.qtgraphicaleffects
+  #   sddm-astronaut
+  # ];
+  #services.displayManager.sddm.theme = "${pkgs.sddm-chili-theme}/share/sddm/themes/chili";
   services.displayManager.sddm.wayland.enable = true;
 
   # Gnome Keyring (for window managers)
@@ -28,6 +28,20 @@
     xwayland.enable = true;
   };
   
+  # i3
+  #services.xserver = {
+  #  enable = true;
+  #  windowManager.i3 = {
+  #    enable = true;
+  #    extraPackages = with pkgs; [
+  #      dmenu #application launcher most people use
+  #      i3status # gives you the default i3 status bar
+  #      i3blocks #if you are planning on using i3blocks over i3status
+  #   ];
+  #  };
+  #};
+  #programs.i3lock.enable = true; #default i3 screen locker
+
   # SWAY
   #programs.sway = {
   #  enable = true;
