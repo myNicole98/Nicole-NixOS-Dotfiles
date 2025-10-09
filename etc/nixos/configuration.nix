@@ -25,7 +25,7 @@ in
       ./modules/desktop.nix
       ./modules/ld-fix.nix
       ./modules/programs.nix
-      #./modules/audio.nix
+      ./modules/bluetooth.nix
     ];
   
 
@@ -33,8 +33,8 @@ in
 #░█▀▄░█░█░█░█░░█░░█░░░█░█░█▀█░█░█░█▀▀░█▀▄
 #░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀
   
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
+  #hardware.bluetooth.enable = true; # enables support for Bluetooth
+  #hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
