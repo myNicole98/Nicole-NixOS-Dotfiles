@@ -27,7 +27,12 @@
     withUWSM = true;
     xwayland.enable = true;
   };
-  
+ 
+  # NIRI #
+  programs.niri = {
+    enable = true;
+  };
+
   # i3
   #services.xserver = {
   #  enable = true;

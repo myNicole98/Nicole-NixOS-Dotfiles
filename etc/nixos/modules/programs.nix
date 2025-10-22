@@ -60,7 +60,7 @@
     libnotify
     wayvnc
     pkgs-unstable.quickshell
-    
+
     # OFFICE #
     pkgs-unstable.onlyoffice-desktopeditors
     obsidian
@@ -91,6 +91,7 @@
     teams-for-linux
     qbittorrent
     rustdesk
+    sunshine
     
     # DEV #
     vscode-fhs
@@ -135,7 +136,8 @@
     # AUDIO AND DAW#
     helvum
     reaper
-    #bitwig-studio
+    a2jmidid
+    bitwig-studio
     #carla
     yabridge
     yabridgectl
