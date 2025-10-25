@@ -6,7 +6,7 @@
 {
   
   # Enable GDM
-  services.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
   
   # Enable SDDM
   #services.displayManager.sddm.enable = true;

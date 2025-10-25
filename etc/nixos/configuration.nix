@@ -21,8 +21,9 @@ in
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./modules/virtualization.nix
-      ./modules/nvidia.nix
       ./modules/desktop.nix
+      #./modules/nvidia.nix
+      ./modules/nvidia-basic.nix
       ./modules/ld-fix.nix
       ./modules/programs.nix
       ./modules/bluetooth.nix
@@ -133,10 +134,26 @@ in
 #░▄▀▄░█░█░█░█
 #░▀░▀░▀▀░░▀▀▀
 
-
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  xdg.portal.config.common.default = "*";
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-gnome
+    ];
+    config = {
+      common = {
+        default = [ "*" ];
+      };
+      niri = {
+        default = [
+          "gtk"
+          "gnome"
+        ];
+        "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
+        "org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
+      };
+    };
+  };
 
 
 
@@ -192,7 +209,12 @@ in
   };
 
   # Fonts with emojis uwu #
-  fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
+  fonts.packages = with pkgs; [ 
+  nerd-fonts.jetbrains-mono 
+  material-symbols
+  inter
+  fira-code
+  ];
 
   services.gvfs.enable = true;
   programs.dconf.enable = true;

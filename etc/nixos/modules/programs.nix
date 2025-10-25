@@ -9,6 +9,7 @@
   # RISKY, REMOVE ASAP ###
   nixpkgs.config.permittedInsecurePackages = [
     "qtwebengine-5.15.19"
+    "mbedtls-2.28.10"
   ];
 
   # Defined Programs
@@ -59,7 +60,9 @@
     rofi
     libnotify
     wayvnc
-    pkgs-unstable.quickshell
+    #pkgs-unstable.quickshell
+    xwayland-satellite
+    #inputs.quickshell.packages.${pkgs.system}.default
 
     # OFFICE #
     pkgs-unstable.onlyoffice-desktopeditors
@@ -72,7 +75,7 @@
     anydesk
 
     # PRODUCTION #
-    gimp
+    #gimp
     pinta
 
     # MEDIA #
@@ -87,10 +90,11 @@
     element-desktop
     vesktop
     mailspring
+    geary
     tutanota-desktop
     teams-for-linux
     qbittorrent
-    rustdesk
+    #rustdesk
     sunshine
     
     # DEV #
