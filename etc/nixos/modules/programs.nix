@@ -65,7 +65,7 @@
     #inputs.quickshell.packages.${pkgs.system}.default
 
     # OFFICE #
-    pkgs-unstable.onlyoffice-desktopeditors
+    #onlyoffice-desktopeditors
     obsidian
     nextcloud-client
     xournalpp
@@ -87,6 +87,7 @@
 
     # INTERNET #
     telegram-desktop
+    #ayugram-desktop # TOS breaking, use at your own peril
     element-desktop
     vesktop
     mailspring
@@ -160,6 +161,7 @@
     "org.pitivi.Pitivi"
     "app.zen_browser.zen"
     "org.blender.Blender"
+    "org.onlyoffice.desktopeditors"
   ];
 
 
