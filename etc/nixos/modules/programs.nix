@@ -60,12 +60,9 @@
     rofi
     libnotify
     wayvnc
-    #pkgs-unstable.quickshell
     xwayland-satellite
-    #inputs.quickshell.packages.${pkgs.system}.default
 
     # OFFICE #
-    #onlyoffice-desktopeditors
     obsidian
     nextcloud-client
     xournalpp
@@ -75,7 +72,7 @@
     anydesk
 
     # PRODUCTION #
-    #gimp
+    gimp
     pinta
 
     # MEDIA #
@@ -87,15 +84,12 @@
 
     # INTERNET #
     telegram-desktop
-    #ayugram-desktop # TOS breaking, use at your own peril
     element-desktop
     vesktop
-    mailspring
     geary
     tutanota-desktop
     teams-for-linux
     qbittorrent
-    #rustdesk
     sunshine
     
     # DEV #
@@ -126,7 +120,6 @@
 
     # UTILS #
     monitorets
-    #gnome-system-monitor
     mission-center
     xdg-user-dirs
     brightnessctl
@@ -146,7 +139,6 @@
     reaper
     a2jmidid
     bitwig-studio
-    #carla
     yabridge
     yabridgectl
     alsa-scarlett-gui
@@ -154,7 +146,6 @@
 
     # WINE #
     wineWowPackages.stable
-    #wineWowPackages.waylandFull
     winetricks
   ];
 
@@ -165,6 +156,7 @@
     "app.zen_browser.zen"
     "org.blender.Blender"
     "org.onlyoffice.desktopeditors"
+    "com.rustdesk.RustDesk"
   ];
 
 
