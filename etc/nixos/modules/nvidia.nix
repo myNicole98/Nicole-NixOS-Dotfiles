@@ -17,7 +17,7 @@
   hardware = {
     nvidia = {
       modesetting.enable = true;
-      open = false;
+      open = true;
       gsp.enable = config.hardware.nvidia.open; 
       powerManagement.enable = false;
       powerManagement.finegrained = false;
@@ -36,9 +36,12 @@
 
     environment = {
       sessionVariables = {
-        "__EGL_VENDOR_LIBRARY_FILENAMES" = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
+        #"__EGL_VENDOR_LIBRARY_FILENAMES" = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
+        "__GLX_VENDOR_LIBRARY_NAME" = "nvidia";
+        "__EGL_EXTERNAL_PLATFORM_CONFIG_DIRS" = "/run/opengl-driver/share/egl/egl_external_platform.d";
+        "LIBEGL_DRIVERS_PATH" = "/run/opengl-driver/lib/egl";
         "CUDA_CACHE_PATH" = "/home/nicole/.cache/nv";
       };
-      etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool.json".source = ./50-limit-free-buffer-pool.json;
+      #etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool.json".source = ./50-limit-free-buffer-pool.json;
     };
 }

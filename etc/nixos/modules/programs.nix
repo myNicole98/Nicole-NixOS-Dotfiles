@@ -138,6 +138,9 @@
     cudaPackages.cudnn
     cudaPackages.cuda_cudart
 
+    # AI #
+    pkgs-unstable.jan
+
     # AUDIO AND DAW#
     helvum
     reaper

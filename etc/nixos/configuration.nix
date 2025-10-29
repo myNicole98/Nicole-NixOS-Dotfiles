@@ -22,8 +22,8 @@ in
       ./hardware-configuration.nix
       ./modules/virtualization.nix
       ./modules/desktop.nix
-      #./modules/nvidia.nix
-      ./modules/nvidia-basic.nix
+      ./modules/nvidia.nix
+      #./modules/nvidia-basic.nix
       ./modules/ld-fix.nix
       ./modules/programs.nix
       ./modules/bluetooth.nix
