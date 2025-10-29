@@ -72,7 +72,6 @@
     anydesk
 
     # PRODUCTION #
-    gimp
     pinta
 
     # MEDIA #
@@ -157,6 +156,7 @@
     "org.blender.Blender"
     "org.onlyoffice.desktopeditors"
     "com.rustdesk.RustDesk"
+    "org.gimp.GIMP"
   ];
 
 
