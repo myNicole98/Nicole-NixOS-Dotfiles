@@ -82,8 +82,9 @@
     spotify
 
     # INTERNET #
-    telegram-desktop
+    pkgs-unstable.telegram-desktop
     element-desktop
+    wasistlos
     vesktop
     geary
     tutanota-desktop
@@ -146,6 +147,8 @@
     # WINE #
     wineWowPackages.stable
     winetricks
+
+    (callPackage ./pkgs/msty/default.nix {}) 
   ];
 
   # Enable Flaktpak
