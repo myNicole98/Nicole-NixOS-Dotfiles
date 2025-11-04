@@ -26,6 +26,7 @@ in
       ./modules/ld-fix.nix
       ./modules/programs.nix
       ./modules/bluetooth.nix
+      ./cachix.nix
     ];
   
 

@@ -124,6 +124,7 @@
     brightnessctl
     pkgs-unstable.openrgb
     dmg2img
+    cachix
     
     # CUDA #
     cudaPackages.cudatoolkit

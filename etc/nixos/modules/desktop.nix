@@ -3,13 +3,18 @@
 #░▀▀░░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░░
 
 {config, pkgs, pkgs-unstable, lib, inputs, ... }:
+
 {
-  
   # Enable GDM
-  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm = {
+    enable = true;
+    #autoLogin.enable = true;
+    #autoLogin.user = "nicole";
+  };
   
   # Enable SDDM
-  #services.displayManager.sddm.enable = true;
+  #services.xserver.displayManager.sddm.enable = true;
+  #services.displayManager.sddm.wayland.enable = true;
   #environment.systemPackages = with pkgs; [
   #   kdePackages.qtmultimedia 
   #   libsForQt5.qt5.qtgraphicaleffects
