@@ -1,6 +1,5 @@
 { config, pkgs, lib, ... }:
 
-
 {
   boot = {
     kernelParams = [
@@ -13,7 +12,7 @@
   };
 
   services.xserver.videoDrivers = ["nvidia"];
-
+  
   hardware = {
     nvidia = {
       modesetting.enable = true;

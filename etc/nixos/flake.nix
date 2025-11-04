@@ -5,9 +5,13 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, ... } @inputs:
 
  let
  system = "x86_64-linux";
@@ -32,6 +36,7 @@
         inherit pkgs-unstable;
       };
       modules = [
+        niri.nixosModules.niri
         nix-flatpak.nixosModules.nix-flatpak
         ./configuration.nix
       ];

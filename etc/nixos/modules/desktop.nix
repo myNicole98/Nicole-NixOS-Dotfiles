@@ -2,7 +2,7 @@
 #░█░█░█▀▀░▀▀█░█▀▄░░█░░█░█░█▀▀
 #░▀▀░░▀▀▀░▀▀▀░▀░▀░░▀░░▀▀▀░▀░░
 
-{config, pkgs, pkgs-unstable, lib, ... }:
+{config, pkgs, pkgs-unstable, lib, inputs, ... }:
 {
   
   # Enable GDM
@@ -29,7 +29,9 @@
   };
  
   # NIRI #
+  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
   programs.niri = {
+    package = pkgs.niri-unstable;
     enable = true;
   };
 

@@ -186,7 +186,7 @@ in
     environmentVariables = {
       CUDA_VISIBLE_DEVICES = "0";
       NVIDIA_VISIBLE_DEVICES = "all";
-     LD_LIBRARY_PATH = "${pkgs.cudaPackages.cudatoolkit}/lib:${pkgs.cudaPackages.cudatoolkit}/lib64";
+      LD_LIBRARY_PATH = "${pkgs-unstable.cudaPackages.cudatoolkit}/lib:${pkgs-unstable.cudaPackages.cudatoolkit}/lib64";
     };
   };
 

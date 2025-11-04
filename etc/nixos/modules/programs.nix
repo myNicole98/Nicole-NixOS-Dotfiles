@@ -69,7 +69,6 @@
     gnome-text-editor
     gnome-calculator
     simple-scan
-    anydesk
 
     # PRODUCTION #
     pinta
@@ -96,7 +95,7 @@
     vscode-fhs
     nixd
     nil
-    zed-editor
+    pkgs-unstable.zed-editor
     gnumake
     cmake
     ninja
@@ -160,6 +159,7 @@
     "org.onlyoffice.desktopeditors"
     "com.rustdesk.RustDesk"
     "org.gimp.GIMP"
+    "com.anydesk.Anydesk"
   ];
 
 
