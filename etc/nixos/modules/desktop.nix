@@ -11,6 +11,18 @@
     #autoLogin.enable = true;
     #autoLogin.user = "nicole";
   };
+
+  systemd.services.copyGdmMonitorsXml = {
+    description = "Copy monitors.xml to GDM config";
+    after = [ "network.target" "systemd-user-sessions.service" "display-manager.service" ];
+
+    serviceConfig = {
+      ExecStart = "${pkgs.bash}/bin/bash -c 'echo \"Running copyGdmMonitorsXml service\" && mkdir -p /run/gdm/.config && echo \"Created /run/gdm/.config directory\" && [ \"/home/nicole/.config/monitors.xml\" -ef \"/run/gdm/.config/monitors.xml\" ] || cp /home/nicole/.config/monitors.xml /run/gdm/.config/monitors.xml && echo \"Copied monitors.xml to /run/gdm/.config/monitors.xml\" && chown gdm:gdm /run/gdm/.config/monitors.xml && echo \"Changed ownership of monitors.xml to gdm\"'";
+      Type = "oneshot";
+    };
+
+wantedBy = [ "multi-user.target" ];
+  };
   
   # Enable SDDM
   #services.xserver.displayManager.sddm.enable = true;
@@ -61,25 +73,25 @@
   #};
 
   # GNOME
-  #services.desktopManager.gnome.enable = true;
-  #environment.gnome.excludePackages = with pkgs; [
-  #  baobab      # disk usage analyzer
-  #  cheese      # photo booth
-  #  eog         # image viewer
-  #  epiphany    # web browser
-  #  gedit       # text editor
-  #  simple-scan # document scanner
-  #  totem       # video player
-  #  yelp        # help viewer
-  #  evince      # document viewer
-  #  file-roller # archive manager
-  #  geary       # email client
-  #  seahorse    # password manager
+  services.xserver.desktopManager.gnome.enable = true;
+  environment.gnome.excludePackages = with pkgs; [
+    baobab      # disk usage analyzer
+    cheese      # photo booth
+    eog         # image viewer
+    epiphany    # web browser
+    gedit       # text editor
+    simple-scan # document scanner
+    totem       # video player
+    yelp        # help viewer
+    evince      # document viewer
+    file-roller # archive manager
+    geary       # email client
+    seahorse    # password manager
 
-   # gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-contacts
-   # gnome-font-viewer gnome-logs gnome-maps gnome-music gnome-photos gnome-screenshot
-   # gnome-system-monitor gnome-weather gnome-disk-utility pkgs.gnome-connections
-  #];
+    gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-contacts
+    gnome-font-viewer gnome-logs gnome-maps gnome-music gnome-photos gnome-screenshot
+    gnome-system-monitor gnome-weather gnome-disk-utility pkgs.gnome-connections
+  ];
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSOR = "1";
