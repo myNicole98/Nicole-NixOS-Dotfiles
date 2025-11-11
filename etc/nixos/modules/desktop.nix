@@ -46,9 +46,9 @@ wantedBy = [ "multi-user.target" ];
   };
  
   # NIRI #
-  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
+  #nixpkgs.overlays = [ inputs.niri.overlays.niri ];
   programs.niri = {
-    package = pkgs.niri-unstable;
+    #package = pkgs.niri-unstable;
     enable = true;
   };
 
