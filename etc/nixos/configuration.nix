@@ -57,6 +57,10 @@ in
       "rd.udev.log_level=0"
       "udev.log_priority=3"
     ];
+    kernel.sysctl = {
+      "vm.max_map_count" = 16777216;
+      "fs.file-max" = 524288;
+    };
 
     kernelPackages = pkgs.linuxPackages_zen;
 

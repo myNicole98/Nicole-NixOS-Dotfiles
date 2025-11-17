@@ -2,7 +2,7 @@
 #░█▀▀░█▀█░█░░░█▀▄░█▀█░█░█░█▀▀░▀▀█
 #░▀░░░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀
 
-{config, pkgs, pkgs-unstable, lib, ... }:
+{config, pkgs, pkgs-unstable, lib, inputs, ... }:
 
 {
   
@@ -101,6 +101,7 @@
     ninja
     libgcc
     gcc
+    uv
 
     # GAMING #
     mangohud
@@ -132,7 +133,11 @@
     cudaPackages.cuda_cudart
 
     # AI #
+    (callPackage ./pkgs/msty/default.nix {}) 
     pkgs-unstable.jan
+    claude-code
+    pkgs-unstable.lmstudio
+    pkgs-unstable.opencode
 
     # AUDIO AND DAW#
     helvum
@@ -148,7 +153,6 @@
     wineWowPackages.stable
     winetricks
 
-    (callPackage ./pkgs/msty/default.nix {}) 
   ];
 
   # Enable Flaktpak
