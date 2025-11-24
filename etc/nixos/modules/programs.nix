@@ -76,7 +76,6 @@
     # MEDIA #
     ffmpeg
     mpv
-    jellyfin-media-player
     feishin
     spotify
 
@@ -102,6 +101,7 @@
     libgcc
     gcc
     uv
+    nodejs_24
 
     # GAMING #
     mangohud
@@ -132,12 +132,14 @@
     cudaPackages.cudnn
     cudaPackages.cuda_cudart
 
-    # AI #
+     #
     (callPackage ./pkgs/msty/default.nix {}) 
     pkgs-unstable.jan
     claude-code
     pkgs-unstable.lmstudio
-    pkgs-unstable.opencode
+    (inputs.opencode.packages.${system}.default)
+    pkgs-unstable.codex
+    pkgs-unstable.gemini-cli
 
     # AUDIO AND DAW#
     helvum
@@ -165,9 +167,15 @@
     "com.rustdesk.RustDesk"
     "org.gimp.GIMP"
     "com.anydesk.Anydesk"
+    "com.github.iwalton3.jellyfin-media-player"
   ];
 
 
 services.hardware.openrgb.enable = true;
+virtualisation.docker.rootless = {
+  enable = true;
+  setSocketVariable = true;
+};
+
 }
 

@@ -121,7 +121,7 @@ in
   users.users.nicole = {
     isNormalUser = true;
     description = "Nicole";
-    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" "cdrom" ];
+    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" "cdrom" "uucp" "docker" ];
     packages = with pkgs; [];
   };
 
