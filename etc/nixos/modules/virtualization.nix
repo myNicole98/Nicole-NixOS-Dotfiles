@@ -21,24 +21,27 @@ in
     kernelParams = lib.mkAfter [
       "amd_iommu=on" # Change to intel_iommu=on if you're using an Intel CPU
       "iommu=pt"
+      "vfio-pci.ids=${builtins.concatStringsSep "," vfioIds}"
     ];
 
     # Add the required VFIO kernel modules
-    kernelModules = [
-      "vfio-pci"
+    initrd.kernelModules = [
+      "vfio_pci"
       "vfio"
       "vfio_iommu_type1"
-      "vfio_virqfd"
+    ];
+    kernelModules = [
       "kvm"
       "kvmfr"
-      "allow_unsafe_interrupts=1"
     ];
 
     # Add the GPU video and audio to VFIO binding
-    extraModprobeConfig = ''options vfio-pci ids=${builtins.concatStringsSep "," vfioIds} 
-                            options kvmfr static_size_mb=128
+    extraModprobeConfig = ''
+      options vfio-pci ids=${builtins.concatStringsSep "," vfioIds}
+      options vfio_iommu_type1 allow_unsafe_interrupts=1
+      options kvmfr static_size_mb=128
     '';
-    
+ 
     # Enable the KVMFR kernel package
     extraModulePackages = [ config.boot.kernelPackages.kvmfr ];
   };
@@ -51,7 +54,7 @@ in
   
   # Add a udev rule to set permissions for KVMFR (Kernel Frame Relay) device
   services.udev.extraRules = ''
-    SUBSYSTEM=="kvmfr", OWNER="${user}", GROUP="kvm", MODE="0660"
+    KERNEL=="kvmfr*", MODE="0660", GROUP="kvm"
   '';
   
   # Enable the libvirtd (virtualization) service
@@ -86,7 +89,8 @@ in
   environment.systemPackages = lib.mkAfter (with pkgs; [
     spice spice-gtk
     spice-protocol
-    win-virtio
+    #win-virtio # 25.05
+    virtio-win # 25.11
     win-spice
     looking-glass-client
     linuxKernel.packages.linux_zen.kvmfr

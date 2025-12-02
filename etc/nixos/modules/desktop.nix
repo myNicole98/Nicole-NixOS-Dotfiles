@@ -6,7 +6,8 @@
 
 {
   # Enable GDM
-  services.xserver.displayManager.gdm = {
+  #services.xserver.displayManager.gdm = { # 25.05
+  services.displayManager.gdm = { # 25.11
     enable = true;
     #autoLogin.enable = true;
     #autoLogin.user = "nicole";
@@ -51,6 +52,9 @@ wantedBy = [ "multi-user.target" ];
     #package = pkgs.niri-unstable;
     enable = true;
   };
+  
+  # MANGO #
+  # programs.mango.enable = true;
 
   # i3
   #services.xserver = {
@@ -73,7 +77,7 @@ wantedBy = [ "multi-user.target" ];
   #};
 
   # GNOME
-  #services.xserver.desktopManager.gnome.enable = true;
+  #services.desktopManager.gnome.enable = true;
   #environment.gnome.excludePackages = with pkgs; [
   #  baobab      # disk usage analyzer
   #  cheese      # photo booth

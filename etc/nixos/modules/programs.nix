@@ -78,9 +78,11 @@
     mpv
     feishin
     spotify
+    #jellyfin-media-player
+    jellyfin-mpv-shim
 
     # INTERNET #
-    pkgs-unstable.telegram-desktop
+    telegram-desktop
     element-desktop
     wasistlos
     vesktop
@@ -137,7 +139,7 @@
     pkgs-unstable.jan
     claude-code
     pkgs-unstable.lmstudio
-    (inputs.opencode.packages.${system}.default)
+    #(inputs.opencode.packages.${system}.default)
     pkgs-unstable.codex
     pkgs-unstable.gemini-cli
 
