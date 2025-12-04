@@ -78,7 +78,7 @@
     mpv
     feishin
     spotify
-    #jellyfin-media-player
+    # jellyfin-media-player
     jellyfin-mpv-shim
 
     # INTERNET #
