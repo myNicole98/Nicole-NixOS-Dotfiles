@@ -134,14 +134,14 @@
     cudaPackages.cudnn
     cudaPackages.cuda_cudart
 
-     #
+    # AI #
     (callPackage ./pkgs/msty/default.nix {}) 
-    pkgs-unstable.jan
-    claude-code
-    pkgs-unstable.lmstudio
-    #(inputs.opencode.packages.${system}.default)
-    pkgs-unstable.codex
-    pkgs-unstable.gemini-cli
+    #pkgs-unstable.jan
+    #claude-code
+    #pkgs-unstable.lmstudio
+    (inputs.opencode.packages.${system}.default)
+    #pkgs-unstable.codex
+    #pkgs-unstable.gemini-cli
 
     # AUDIO AND DAW#
     helvum

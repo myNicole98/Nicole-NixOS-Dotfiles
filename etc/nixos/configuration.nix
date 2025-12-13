@@ -28,6 +28,11 @@ in
       ./modules/bluetooth.nix
       ./cachix.nix
     ];
+
+  fileSystems."/mnt/storage" = {
+    device = "/dev/disk/by-uuid/fc0150d8-4f57-4d95-abe9-4b979336b3ce";
+    fsType = "ext4";
+  };
   
 
 #░█▀▄░█▀█░█▀█░▀█▀░█░░░█▀█░█▀█░█▀▄░█▀▀░█▀▄
