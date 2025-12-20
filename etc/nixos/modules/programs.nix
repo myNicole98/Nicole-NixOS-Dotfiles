@@ -108,6 +108,7 @@
     # GAMING #
     mangohud
     lutris
+    #heroic
     protonup-qt
     gdlauncher-carbon
     adwsteamgtk
