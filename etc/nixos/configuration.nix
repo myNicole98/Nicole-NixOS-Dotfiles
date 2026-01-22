@@ -26,6 +26,7 @@ in
       ./modules/ld-fix.nix
       ./modules/programs.nix
       ./modules/bluetooth.nix
+      ./modules/KawaiCA49.nix
       ./cachix.nix
     ];
 
@@ -33,7 +34,7 @@ in
     device = "/dev/disk/by-uuid/fc0150d8-4f57-4d95-abe9-4b979336b3ce";
     fsType = "ext4";
   };
-  
+
 
 #░█▀▄░█▀█░█▀█░▀█▀░█░░░█▀█░█▀█░█▀▄░█▀▀░█▀▄
 #░█▀▄░█░█░█░█░░█░░█░░░█░█░█▀█░█░█░█▀▀░█▀▄
@@ -71,6 +72,12 @@ in
 
     loader.timeout = 0;
     loader.systemd-boot.consoleMode = "auto";
+    
+    # Add a midi bridge for BLE MIDI devices
+    kernelModules = [ "snd-virmidi" ];
+    extraModprobeConfig = ''
+      options snd-virmidi midi_devs=1
+    '';
   };
 
 
@@ -180,6 +187,11 @@ in
     alsa.enable = true;
     alsa.support32Bit = true;
     jack.enable = true;
+  };
+
+  hardware.kawaiCA49 = {
+    enable = true;
+    user = "nicole";
   };
 
   # ISO mounting utils #

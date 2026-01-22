@@ -104,6 +104,7 @@
     gcc
     uv
     nodejs_24
+    dbgate
 
     # GAMING #
     mangohud
@@ -153,6 +154,7 @@
     yabridgectl
     alsa-scarlett-gui
     qjackctl
+    alsa-utils
 
     # WINE #
     wineWowPackages.stable

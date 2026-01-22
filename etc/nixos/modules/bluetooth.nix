@@ -4,6 +4,7 @@
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
+    package = pkgs.bluez;
     settings.General = {
       experimental = true; # show battery
       Privacy = "device";
