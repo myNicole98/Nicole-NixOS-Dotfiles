@@ -130,6 +130,8 @@
     pkgs-unstable.openrgb
     dmg2img
     cachix
+    rbw
+    pinentry-tty
     
     # CUDA #
     cudaPackages.cudatoolkit
