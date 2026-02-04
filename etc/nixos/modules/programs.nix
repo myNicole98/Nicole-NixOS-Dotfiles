@@ -42,7 +42,8 @@
     # SCREENSHOTS AND RECORDING #
     grim
     slurp
-    swappy 
+    #swappy
+    satty
     wl-clipboard
     obs-studio
 
@@ -61,6 +62,7 @@
     libnotify
     wayvnc
     xwayland-satellite
+    xwayland-run
 
     # OFFICE #
     obsidian
@@ -70,8 +72,9 @@
     gnome-calculator
     simple-scan
 
-    # IMAGE EDITING #
+    # MEDIA EDITING #
     pinta
+    davinci-resolve
 
     # MEDIA #
     ffmpeg
@@ -90,7 +93,7 @@
     tutanota-desktop
     teams-for-linux
     qbittorrent
-    sunshine
+    sunshine 
     
     # DEV #
     vscode-fhs
@@ -110,7 +113,8 @@
     mangohud
     lutris
     #heroic
-    protonup-qt
+    #protonup-qt
+    pkgs-unstable.protonplus
     gdlauncher-carbon
     adwsteamgtk
 
@@ -132,6 +136,7 @@
     cachix
     rbw
     pinentry-tty
+    kando
     
     # CUDA #
     cudaPackages.cudatoolkit
@@ -142,7 +147,7 @@
     (callPackage ./pkgs/msty/default.nix {}) 
     #pkgs-unstable.jan
     #claude-code
-    #pkgs-unstable.lmstudio
+    pkgs-unstable.lmstudio
     (inputs.opencode.packages.${system}.default)
     #pkgs-unstable.codex
     #pkgs-unstable.gemini-cli
@@ -154,14 +159,17 @@
     bitwig-studio
     yabridge
     yabridgectl
-    alsa-scarlett-gui
-    qjackctl
+    # alsa-scarlett-gui
+    # qjackctl
     alsa-utils
+    #vital
+    (callPackage ./pkgs/vital-stable/default.nix {}) 
 
     # WINE #
     wineWowPackages.stable
+    #wineWowPackages.waylandFull
+    #wineWowPackages.staging
     winetricks
-
   ];
 
   # Enable Flaktpak
@@ -180,10 +188,17 @@
 
 
 services.hardware.openrgb.enable = true;
+
 virtualisation.docker.rootless = {
   enable = true;
   setSocketVariable = true;
 };
 
+  security.pam.loginLimits = [{
+    domain = "nicole";
+    type = "hard";
+    item = "nofile";
+    value = "524288";
+  }];
 }
 

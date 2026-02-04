@@ -8,10 +8,10 @@
   makeWrapper,
 }: let
   pname = "msty-studio";
-  version = "2.1.0";
+  version = "2.4.1";
   src = fetchurl {
     url = "https://next-assets.msty.studio/app/latest/linux/MstyStudio_x86_64.AppImage";
-    sha256 = "sha256-3k8piIfvxJXIkKQeta9Ce7VmJSXpUqSuFg/37swvUAI=";
+    sha256 = "sha256-YsXa4W0so5lQs6uex14QIoVg21cN7Bi0fWJMhChSDnA=";
   };
   appimageContents = appimageTools.extractType2 {inherit pname version src;};
 in

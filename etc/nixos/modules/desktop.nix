@@ -14,17 +14,17 @@
   };
 
   systemd.services.copyGdmMonitorsXml = {
-    description = "Copy monitors.xml to GDM config";
-    after = [ "network.target" "systemd-user-sessions.service" "display-manager.service" ];
-
-    serviceConfig = {
-      ExecStart = "${pkgs.bash}/bin/bash -c 'echo \"Running copyGdmMonitorsXml service\" && mkdir -p /run/gdm/.config && echo \"Created /run/gdm/.config directory\" && [ \"/home/nicole/.config/monitors.xml\" -ef \"/run/gdm/.config/monitors.xml\" ] || cp /home/nicole/.config/monitors.xml /run/gdm/.config/monitors.xml && echo \"Copied monitors.xml to /run/gdm/.config/monitors.xml\" && chown gdm:gdm /run/gdm/.config/monitors.xml && echo \"Changed ownership of monitors.xml to gdm\"'";
-      Type = "oneshot";
-    };
-
-wantedBy = [ "multi-user.target" ];
+  description = "Copy monitors.xml to GDM config";
+  after = [ "network.target" "systemd-user-sessions.service" "display-manager.service" ];
+  
+  serviceConfig = {
+    ExecStart = "${pkgs.bash}/bin/bash -c 'mkdir -p /var/lib/gdm/seat0/config && cp /home/nicole/.config/monitors.xml /var/lib/gdm/seat0/config/monitors.xml && chown gdm:gdm /var/lib/gdm/seat0/config/monitors.xml'";
+    Type = "oneshot";
   };
   
+  wantedBy = [ "multi-user.target" ];
+};
+
   # Enable SDDM
   #services.xserver.displayManager.sddm.enable = true;
   #services.displayManager.sddm.wayland.enable = true;
@@ -47,9 +47,9 @@ wantedBy = [ "multi-user.target" ];
   #};
  
   # NIRI #
-  #nixpkgs.overlays = [ inputs.niri.overlays.niri ];
+  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
   programs.niri = {
-    #package = pkgs.niri-unstable;
+    package = pkgs.niri-unstable;
     enable = true;
   };
   

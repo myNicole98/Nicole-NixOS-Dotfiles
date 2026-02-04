@@ -17,9 +17,10 @@
       url = "github:DreamMaoMao/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    musnix.url = "github:musnix/musnix";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, opencode, mango, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, opencode, mango, musnix, ... } @inputs:
 
  let
  system = "x86_64-linux";
@@ -47,6 +48,7 @@
         niri.nixosModules.niri
         nix-flatpak.nixosModules.nix-flatpak
         mango.nixosModules.mango
+        musnix.nixosModules.musnix
         ./configuration.nix
       ];
     };

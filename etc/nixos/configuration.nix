@@ -27,6 +27,7 @@ in
       ./modules/programs.nix
       ./modules/bluetooth.nix
       ./modules/KawaiCA49.nix
+      ./modules/logitech.nix
       ./cachix.nix
     ];
 
@@ -133,7 +134,7 @@ in
   users.users.nicole = {
     isNormalUser = true;
     description = "Nicole";
-    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" "cdrom" "uucp" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" "cdrom" "uucp" "docker" "audio"];
     packages = with pkgs; [];
   };
 
@@ -189,6 +190,8 @@ in
     jack.enable = true;
   };
 
+  musnix.enable = true;
+
   hardware.kawaiCA49 = {
     enable = true;
     user = "nicole";
@@ -208,7 +211,7 @@ in
     environmentVariables = {
       CUDA_VISIBLE_DEVICES = "0";
       NVIDIA_VISIBLE_DEVICES = "all";
-      LD_LIBRARY_PATH = "${pkgs-unstable.cudaPackages.cudatoolkit}/lib:${pkgs-unstable.cudaPackages.cudatoolkit}/lib64";
+      LD_LIBRARY_PATH = "${pkgs.cudaPackages.cudatoolkit}/lib:${pkgs.cudaPackages.cudatoolkit}/lib64";
     };
   };
 
