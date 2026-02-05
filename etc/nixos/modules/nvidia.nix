@@ -1,5 +1,10 @@
 { config, pkgs, lib, ... }:
 
+let 
+
+package = config.boot.kernelPackages.nvidiaPackages.latest;
+
+in
 {
   boot = {
     kernelParams = [
@@ -21,8 +26,10 @@
       powerManagement.enable = false;
       powerManagement.finegrained = false;
       nvidiaSettings = false;
+      package = pkgs.nvidia-patch.patch-nvenc (pkgs.nvidia-patch.patch-fbc package);
 
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+
+
 
       #package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
       #  version = "580.95.05";

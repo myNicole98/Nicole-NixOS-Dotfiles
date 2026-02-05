@@ -2,7 +2,8 @@
   description = "My Flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    #nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     niri = {
@@ -12,15 +13,19 @@
     nix-citizen.url = "github:LovingMelody/nix-citizen";
     nix-gaming.url = "github:fufexan/nix-gaming";
     nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
-    opencode.url = "github:sst/opencode";
+    #opencode.url = "github:sst/opencode";
     mango = {
       url = "github:DreamMaoMao/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     musnix.url = "github:musnix/musnix";
+    nvidia-patch = {
+      url = "github:icewind1991/nvidia-patch-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, opencode, mango, musnix, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, mango, musnix, nvidia-patch, ... } @inputs:
 
  let
  system = "x86_64-linux";
@@ -49,8 +54,10 @@
         nix-flatpak.nixosModules.nix-flatpak
         mango.nixosModules.mango
         musnix.nixosModules.musnix
+        {nixpkgs.overlays = [inputs.nvidia-patch.overlays.default];}
         ./configuration.nix
       ];
+
     };
   };
 }

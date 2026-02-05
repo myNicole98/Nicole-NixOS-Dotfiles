@@ -148,7 +148,8 @@
     #pkgs-unstable.jan
     #claude-code
     pkgs-unstable.lmstudio
-    (inputs.opencode.packages.${system}.default)
+    #(inputs.opencode.packages.${system}.default)
+    pkgs-unstable.opencode
     #pkgs-unstable.codex
     #pkgs-unstable.gemini-cli
 
