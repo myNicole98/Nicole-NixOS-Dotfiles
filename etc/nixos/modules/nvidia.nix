@@ -26,9 +26,15 @@ in
       powerManagement.enable = false;
       powerManagement.finegrained = false;
       nvidiaSettings = false;
-      package = pkgs.nvidia-patch.patch-nvenc (pkgs.nvidia-patch.patch-fbc package);
+      #package = pkgs.nvidia-patch.patch-nvenc (pkgs.nvidia-patch.patch-fbc package);
 
-
+      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "590.48.01";
+        sha256_64bit = "sha256-ueL4BpN4FDHMh/TNKRCeEz3Oy1ClDWto1LO/LWlr1ok=";
+        openSha256 = "sha256-hECHfguzwduEfPo5pCDjWE/MjtRDhINVr4b1awFdP44=";
+        usePersistenced = false;
+        useSettings = false;
+      };
 
 
       #package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
@@ -53,9 +59,9 @@ in
     environment = {
       sessionVariables = {
         #"__EGL_VENDOR_LIBRARY_FILENAMES" = "${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json";
-        "__GLX_VENDOR_LIBRARY_NAME" = "nvidia";
-        "__EGL_EXTERNAL_PLATFORM_CONFIG_DIRS" = "/run/opengl-driver/share/egl/egl_external_platform.d";
-        "LIBEGL_DRIVERS_PATH" = "/run/opengl-driver/lib/egl";
+        #"__GLX_VENDOR_LIBRARY_NAME" = "nvidia";
+        #"__EGL_EXTERNAL_PLATFORM_CONFIG_DIRS" = "/run/opengl-driver/share/egl/egl_external_platform.d";
+        #"LIBEGL_DRIVERS_PATH" = "/run/opengl-driver/lib/egl";
         "CUDA_CACHE_PATH" = "/home/nicole/.cache/nv";
       };
       #etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool.json".source = ./50-limit-free-buffer-pool.json;

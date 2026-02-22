@@ -24,6 +24,7 @@
     cowsay
     starship
     cava
+    vulkan-tools
 
     # FILES #
     gvfs
@@ -61,7 +62,8 @@
     rofi
     libnotify
     wayvnc
-    xwayland-satellite
+    #xwayland-satellite
+    (callPackage ./pkgs/xwayland-satellite/default.nix {}) 
     xwayland-run
 
     # OFFICE #
@@ -74,7 +76,7 @@
 
     # MEDIA EDITING #
     pinta
-    davinci-resolve
+    pkgs-unstable.davinci-resolve
 
     # MEDIA #
     ffmpeg
@@ -89,8 +91,11 @@
     element-desktop
     wasistlos
     vesktop
-    geary
-    tutanota-desktop
+    #geary
+    #mailspring
+    pkgs-unstable.thunderbird
+    #tutanota-desktop
+    pkgs-unstable.protonmail-desktop
     teams-for-linux
     qbittorrent
     sunshine 
@@ -117,6 +122,7 @@
     pkgs-unstable.protonplus
     gdlauncher-carbon
     adwsteamgtk
+    lug-helper
 
     # OTHERS #
     seahorse
@@ -164,13 +170,17 @@
     # qjackctl
     alsa-utils
     #vital
-    (callPackage ./pkgs/vital-stable/default.nix {}) 
+    (callPackage ./pkgs/vital-stable/default.nix {})
 
     # WINE #
     wineWowPackages.stable
     #wineWowPackages.waylandFull
     #wineWowPackages.staging
     winetricks
+
+    # CAD&3D #
+    orca-slicer
+    #freecad
   ];
 
   # Enable Flaktpak
@@ -185,8 +195,8 @@
     "com.anydesk.Anydesk"
     "com.github.iwalton3.jellyfin-media-player"
     "com.sweethome3d.Sweethome3d"
+    "com.tutanota.Tutanota"
   ];
-
 
 services.hardware.openrgb.enable = true;
 

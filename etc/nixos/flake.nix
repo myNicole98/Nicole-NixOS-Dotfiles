@@ -10,9 +10,6 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-citizen.url = "github:LovingMelody/nix-citizen";
-    nix-gaming.url = "github:fufexan/nix-gaming";
-    nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
     #opencode.url = "github:sst/opencode";
     mango = {
       url = "github:DreamMaoMao/mango";
@@ -23,9 +20,14 @@
       url = "github:icewind1991/nvidia-patch-nixos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    solaar = {
+      #url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz"; # For latest stable version
+      url = "github:Svenum/Solaar-Flake/main"; # Uncomment line for latest unstable version
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, mango, musnix, nvidia-patch, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, mango, musnix, nvidia-patch, solaar, ... } @inputs:
 
  let
  system = "x86_64-linux";
@@ -55,6 +57,7 @@
         mango.nixosModules.mango
         musnix.nixosModules.musnix
         {nixpkgs.overlays = [inputs.nvidia-patch.overlays.default];}
+        solaar.nixosModules.default
         ./configuration.nix
       ];
 
