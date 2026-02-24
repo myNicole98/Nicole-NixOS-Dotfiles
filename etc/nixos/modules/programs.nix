@@ -92,8 +92,8 @@
     wasistlos
     vesktop
     #geary
-    #mailspring
-    pkgs-unstable.thunderbird
+    pkgs-unstable.mailspring
+    #pkgs-unstable.thunderbird
     #tutanota-desktop
     pkgs-unstable.protonmail-desktop
     teams-for-linux
@@ -181,6 +181,7 @@
     # CAD&3D #
     orca-slicer
     #freecad
+    (callPackage ./pkgs/anycubic-slicer-next/default.nix {})
   ];
 
   # Enable Flaktpak
@@ -195,7 +196,6 @@
     "com.anydesk.Anydesk"
     "com.github.iwalton3.jellyfin-media-player"
     "com.sweethome3d.Sweethome3d"
-    "com.tutanota.Tutanota"
   ];
 
 services.hardware.openrgb.enable = true;
