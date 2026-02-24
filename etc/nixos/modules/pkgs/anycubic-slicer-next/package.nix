@@ -5,6 +5,7 @@
   autoPatchelfHook,
   dpkg,
   buildFHSEnv,
+  writeShellScript,
   gtk3,
   glib,
   glibc,
@@ -47,6 +48,8 @@
   fontconfig,
   sqlite,
   curl,
+  vulkan-loader,
+  vulkan-tools,
 }:
 
 let
@@ -55,7 +58,7 @@ let
     version = "1.3.7171-20250928";
 
     src = fetchurl {
-      url = "https://cdn-universe-slicer.anycubic.com/prod/dists/noble/main/binary-amd64/AnycubicSlicerNext-1.3.7171_20250928_162543-Ubuntu_24_04_2_LTS.deb";
+      url = "https://cdn-universe-slicer.anycubic.com/prod/dists/noble/main/binary-amd64/AnycubicSlicerNext-1.3.7171_20250928_162543-Ubuntu_24_04_2_LTS.deb ";
       hash = "sha256-oB/oY8xO/o+UOXR4K/yy0dAIrjB3ztBl9j24k9ceH5I=";
     };
 
@@ -98,17 +101,37 @@ let
     alsa-lib udev nspr nss expat cups at-spi2-atk at-spi2-core
     libdrm wayland libxkbcommon webkitgtk_4_1 openssl zlib libpng
     libjpeg freetype fontconfig sqlite curl
+    vulkan-loader
   ];
+
+  launcherScript = writeShellScript "anycubic-slicer-next-launcher" ''
+    if [ -d /run/opengl-driver/lib ]; then
+      export LD_LIBRARY_PATH=/run/opengl-driver/lib:$LD_LIBRARY_PATH
+    fi
+
+    # Workaround for blank 3D preview on Nvidia+Wayland
+    export __GLX_VENDOR_LIBRARY_NAME=mesa
+    export MESA_LOADER_DRIVER_OVERRIDE=zink
+    export GALLIUM_DRIVER=zink
+    export WEBKIT_DISABLE_DMABUF_RENDERER=1
+    
+    if [ -f /run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json ]; then
+      export __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json
+    fi
+
+    exec /lib/anycubic-slicer-next/AnycubicSlicerNext "$@"
+  '';
 
 in buildFHSEnv {
   name = "AnycubicSlicerNext";
+
   targetPkgs = _: runtimeLibs ++ [ unwrapped ];
 
   extraBwrapArgs = [
     "--ro-bind" "${unwrapped}/share/AnycubicSlicerNext" "/usr/share/AnycubicSlicerNext"
   ];
 
-  runScript = "/lib/anycubic-slicer-next/AnycubicSlicerNext";
+  runScript = "${launcherScript}";
 
   extraInstallCommands = ''
     mkdir -p $out/share/applications
@@ -127,7 +150,7 @@ EOF
 
   meta = with lib; {
     description = "G-code slicer for Anycubic 3D printers, based on OrcaSlicer";
-    homepage = "https://wiki.anycubic.com/en/software-and-app/anycubic-slicer-next-linux";
+    homepage = "https://wiki.anycubic.com/en/software-and-app/anycubic-slicer-next-linux ";
     license = licenses.agpl3Only;
     sourceProvenance = with sourceTypes; [ binaryNativeCode ];
     platforms = [ "x86_64-linux" ];

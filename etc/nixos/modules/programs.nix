@@ -4,6 +4,31 @@
 
 {config, pkgs, pkgs-unstable, lib, inputs, ... }:
 
+let
+
+  orca-slicer-fixed = pkgs.symlinkJoin {
+    name = "orca-slicer";
+    paths = [ pkgs.orca-slicer ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      # Wrap the binary
+      wrapProgram $out/bin/orca-slicer \
+        --set __GLX_VENDOR_LIBRARY_NAME mesa \
+        --set __EGL_VENDOR_LIBRARY_FILENAMES "${pkgs.mesa}/share/glvnd/egl_vendor.d/50_mesa.json" \
+        --set MESA_LOADER_DRIVER_OVERRIDE zink \
+        --set GALLIUM_DRIVER zink \
+        --set WEBKIT_DISABLE_DMABUF_RENDERER 1
+      
+      # Fix the desktop entry to point to the wrapped binary
+      if [ -f $out/share/applications/orca-slicer.desktop ]; then
+        substituteInPlace $out/share/applications/orca-slicer.desktop \
+          --replace "Exec=orca-slicer" "Exec=$out/bin/orca-slicer"
+      fi
+    '';
+  };
+
+in
+
 {
   
   # RISKY, REMOVE ASAP ###
@@ -179,7 +204,7 @@
     winetricks
 
     # CAD&3D #
-    orca-slicer
+    orca-slicer-fixed
     #freecad
     (callPackage ./pkgs/anycubic-slicer-next/default.nix {})
   ];
