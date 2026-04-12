@@ -40,11 +40,11 @@
   services.gnome.gnome-keyring.enable = true;
 
   # HYPRLAND #
-  #programs.hyprland = {
-  #  enable = true;
-  #  withUWSM = true;
-  #  xwayland.enable = true;
-  #};
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+  };
  
   # NIRI #
   nixpkgs.overlays = [ inputs.niri.overlays.niri ];
@@ -77,25 +77,38 @@
   #};
 
   # GNOME
-  services.desktopManager.gnome.enable = true;
-  environment.gnome.excludePackages = with pkgs; [
-    baobab      # disk usage analyzer
-    cheese      # photo booth
-    eog         # image viewer
-    epiphany    # web browser
-    gedit       # text editor
-    simple-scan # document scanner
-    totem       # video player
-    yelp        # help viewer
-    evince      # document viewer
-    file-roller # archive manager
-    geary       # email client
-    seahorse    # password manager
+  #services.desktopManager.gnome.enable = true;
+  #environment.gnome.excludePackages = with pkgs; [
+  #  baobab      # disk usage analyzer
+  #  cheese      # photo booth
+  #  eog         # image viewer
+  #  epiphany    # web browser
+  #  gedit       # text editor
+  #  simple-scan # document scanner
+  #  totem       # video player
+  #  yelp        # help viewer
+  #  evince      # document viewer
+  #  file-roller # archive manager
+  #  geary       # email client
+  #  seahorse    # password manager
 
-    gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-contacts
-    gnome-font-viewer gnome-logs gnome-maps gnome-music gnome-photos gnome-screenshot
-    gnome-system-monitor gnome-weather gnome-disk-utility pkgs.gnome-connections
-  ];
+  #  gnome-calculator gnome-calendar gnome-characters gnome-clocks gnome-contacts
+  #  gnome-font-viewer gnome-logs gnome-maps gnome-music gnome-photos gnome-screenshot
+  #  gnome-system-monitor gnome-weather gnome-disk-utility pkgs.gnome-connections
+  #];
+
+  # KDE
+  #services.desktopManager.plasma6.enable = true;
+  #environment.plasma6.excludePackages = with pkgs; [
+    #kdePackages.elisa # Music player
+    #kdePackages.kdepim-runtime # Akonadi agents
+    #kdePackages.kmahjongg
+    #kdePackages.kmines
+    #kdePackages.konversation # IRC client
+    #kdePackages.kpat # Solitaire
+    #kdePackages.ksudoku
+    #kdePackages.ktorrent
+  #];
 
   environment.sessionVariables = {
     WLR_NO_HARDWARE_CURSOR = "1";

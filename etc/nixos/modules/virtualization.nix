@@ -40,6 +40,8 @@ in
       options vfio-pci ids=${builtins.concatStringsSep "," vfioIds}
       options vfio_iommu_type1 allow_unsafe_interrupts=1
       options kvmfr static_size_mb=128
+      options kvm_amd nested=1
+      options kvm ignore_msrs=1
     '';
  
     # Enable the KVMFR kernel package

@@ -16,18 +16,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     musnix.url = "github:musnix/musnix";
-    nvidia-patch = {
-      url = "github:icewind1991/nvidia-patch-nixos";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     solaar = {
       #url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz"; # For latest stable version
       url = "github:Svenum/Solaar-Flake/main"; # Uncomment line for latest unstable version
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    affinity-nix = {
+      url = "github:mrshmllow/affinity-nix";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, mango, musnix, nvidia-patch, solaar, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, mango, musnix, solaar, affinity-nix, ... } @inputs:
 
  let
  system = "x86_64-linux";
@@ -52,11 +51,13 @@
         inherit pkgs-unstable;
       };
       modules = [
+        {
+          environment.systemPackages = [affinity-nix.packages.x86_64-linux.v3];
+        }
         niri.nixosModules.niri
         nix-flatpak.nixosModules.nix-flatpak
         mango.nixosModules.mango
         musnix.nixosModules.musnix
-        {nixpkgs.overlays = [inputs.nvidia-patch.overlays.default];}
         solaar.nixosModules.default
         ./configuration.nix
       ];

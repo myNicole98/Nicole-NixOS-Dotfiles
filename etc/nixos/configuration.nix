@@ -154,7 +154,7 @@ in
 #░█░█░█░█░█▀▀░█▀▄░█▀▀░█▀▀
 #░▀▀▀░▀░▀░▀░░░▀░▀░▀▀▀░▀▀▀
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.cudaSupport = true;
+  #nixpkgs.config.cudaSupport = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
 
@@ -167,6 +167,7 @@ in
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
       xdg-desktop-portal-gnome
+      xdg-desktop-portal-hyprland
     ];
     config = {
       common = {
@@ -218,7 +219,7 @@ in
   services.ollama = {
     enable = true;
     acceleration = "cuda";
-    package = pkgs-unstable.ollama;
+    package = pkgs-unstable.ollama-cuda;
     environmentVariables = {
       CUDA_VISIBLE_DEVICES = "0";
       NVIDIA_VISIBLE_DEVICES = "all";

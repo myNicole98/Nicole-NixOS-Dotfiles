@@ -36,11 +36,12 @@ in
     "qtwebengine-5.15.19"
     "mbedtls-2.28.10"
   ];
-
+  
   # Defined Programs
   environment.systemPackages = with pkgs; [
     # TERM UTILS #
     neovim
+    kitty
     wget
     git
     fastfetch
@@ -50,6 +51,8 @@ in
     starship
     cava
     vulkan-tools
+    zip
+    jq
 
     # FILES #
     gvfs
@@ -87,7 +90,7 @@ in
     rofi
     libnotify
     wayvnc
-    #xwayland-satellite
+    #pkgs-unstable.xwayland-satellite
     (callPackage ./pkgs/xwayland-satellite/default.nix {}) 
     xwayland-run
 
@@ -117,8 +120,8 @@ in
     wasistlos
     vesktop
     #geary
-    pkgs-unstable.mailspring
-    #pkgs-unstable.thunderbird
+    #pkgs-unstable.mailspring
+    pkgs-unstable.thunderbird
     #tutanota-desktop
     pkgs-unstable.protonmail-desktop
     teams-for-linux
@@ -156,6 +159,8 @@ in
     remmina
     appimage-run
     gnomeExtensions.appindicator
+    pywalfox-native
+    linux-wallpaperengine
 
     # UTILS #
     monitorets
@@ -168,6 +173,7 @@ in
     rbw
     pinentry-tty
     kando
+    gearlever
     
     # CUDA #
     cudaPackages.cudatoolkit
@@ -195,23 +201,24 @@ in
     # qjackctl
     alsa-utils
     #vital
-    (callPackage ./pkgs/vital-stable/default.nix {})
+    #(callPackage ./pkgs/vital-stable/default.nix {})
 
     # WINE #
     wineWowPackages.stable
     #wineWowPackages.waylandFull
     #wineWowPackages.staging
     winetricks
+    bottles
 
     # CAD&3D #
     orca-slicer-fixed
-    #freecad
     (callPackage ./pkgs/anycubic-slicer-next/default.nix {})
   ];
 
   # Enable Flaktpak
   services.flatpak.enable = true;
   services.flatpak.packages = [
+    "com.github.tchx84.Flatseal"
     "org.pitivi.Pitivi"
     "app.zen_browser.zen"
     "org.blender.Blender"
@@ -221,9 +228,14 @@ in
     "com.anydesk.Anydesk"
     "com.github.iwalton3.jellyfin-media-player"
     "com.sweethome3d.Sweethome3d"
+    "org.freecad.FreeCAD"
   ];
 
 services.hardware.openrgb.enable = true;
+
+programs.firefox = {
+  enable = true;
+};
 
 virtualisation.docker.rootless = {
   enable = true;
