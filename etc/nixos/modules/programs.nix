@@ -53,6 +53,7 @@ in
     vulkan-tools
     zip
     jq
+    libsecret
 
     # FILES #
     gvfs
@@ -110,6 +111,7 @@ in
     ffmpeg
     mpv
     feishin
+    #(callPackage ./pkgs/feishin/default.nix {}) 
     spotify
     # jellyfin-media-player
     jellyfin-mpv-shim
@@ -170,10 +172,11 @@ in
     pkgs-unstable.openrgb
     dmg2img
     cachix
-    rbw
+    pkgs-unstable.rbw
     pinentry-tty
     kando
     gearlever
+    bitwarden-desktop
     
     # CUDA #
     cudaPackages.cudatoolkit
@@ -233,9 +236,9 @@ in
 
 services.hardware.openrgb.enable = true;
 
-programs.firefox = {
-  enable = true;
-};
+#programs.firefox = {
+#  enable = true;
+#};
 
 virtualisation.docker.rootless = {
   enable = true;
