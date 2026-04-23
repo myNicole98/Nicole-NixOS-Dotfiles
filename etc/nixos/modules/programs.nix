@@ -72,7 +72,7 @@ in
     grim
     slurp
     #swappy
-    satty
+    pkgs-unstable.satty
     wl-clipboard
     obs-studio
 
@@ -169,7 +169,6 @@ in
     mission-center
     xdg-user-dirs
     brightnessctl
-    pkgs-unstable.openrgb
     dmg2img
     cachix
     rbw
@@ -234,11 +233,14 @@ in
     "org.freecad.FreeCAD"
   ];
 
-services.hardware.openrgb.enable = true;
-
 #programs.firefox = {
 #  enable = true;
 #};
+
+services.hardware.openrgb = { 
+  enable = true; 
+  package = pkgs-unstable.openrgb-with-all-plugins; 
+};
 
 virtualisation.docker.rootless = {
   enable = true;
