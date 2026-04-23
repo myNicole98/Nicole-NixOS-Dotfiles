@@ -40,11 +40,11 @@
   services.gnome.gnome-keyring.enable = true;
 
   # HYPRLAND #
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-    xwayland.enable = true;
-  };
+  #programs.hyprland = {
+  #  enable = true;
+  #  withUWSM = true;
+  #  xwayland.enable = true;
+  #};
  
   # NIRI #
   nixpkgs.overlays = [ inputs.niri.overlays.niri ];

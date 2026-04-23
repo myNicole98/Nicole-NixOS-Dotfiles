@@ -116,7 +116,8 @@ in
     jellyfin-mpv-shim
 
     # INTERNET #
-    telegram-desktop
+    pkgs-unstable.telegram-desktop
+    #pkgs-unstable._64gram
     element-desktop
     wasistlos
     vesktop
@@ -171,9 +172,9 @@ in
     pkgs-unstable.openrgb
     dmg2img
     cachix
-    pkgs-unstable.rbw
+    rbw
     pinentry-tty
-    kando
+    pkgs-unstable.kando
     gearlever
     bitwarden-desktop
     
@@ -222,7 +223,7 @@ in
   services.flatpak.packages = [
     "com.github.tchx84.Flatseal"
     "org.pitivi.Pitivi"
-    "app.zen_browser.zen"
+    #"app.zen_browser.zen"
     "org.blender.Blender"
     "org.onlyoffice.desktopeditors"
     "com.rustdesk.RustDesk"
