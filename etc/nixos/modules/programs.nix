@@ -72,7 +72,7 @@ in
     grim
     slurp
     #swappy
-    pkgs-unstable.satty
+    satty
     wl-clipboard
     obs-studio
 
@@ -116,13 +116,13 @@ in
     jellyfin-mpv-shim
 
     # INTERNET #
-    pkgs-unstable.telegram-desktop
-    #pkgs-unstable._64gram
+    #pkgs-unstable.telegram-desktop
+    pkgs-unstable._64gram
     element-desktop
     wasistlos
     vesktop
     #geary
-    #pkgs-unstable.mailspring
+    pkgs-unstable.mailspring
     pkgs-unstable.thunderbird
     #tutanota-desktop
     pkgs-unstable.protonmail-desktop
@@ -151,7 +151,7 @@ in
     #protonup-qt
     pkgs-unstable.protonplus
     gdlauncher-carbon
-    adwsteamgtk
+    #adwsteamgtk
     lug-helper
 
     # OTHERS #
@@ -222,7 +222,7 @@ in
   services.flatpak.packages = [
     "com.github.tchx84.Flatseal"
     "org.pitivi.Pitivi"
-    #"app.zen_browser.zen"
+    "app.zen_browser.zen"
     "org.blender.Blender"
     "org.onlyoffice.desktopeditors"
     "com.rustdesk.RustDesk"

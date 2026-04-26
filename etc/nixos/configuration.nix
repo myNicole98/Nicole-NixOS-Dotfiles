@@ -228,6 +228,7 @@ in
 
   # STEAM #
   programs.steam.enable = true;
+  programs.steam.package = pkgs.millennium-steam;
   programs.steam.gamescopeSession.enable = true;
   programs.gamemode.enable =  true;
  

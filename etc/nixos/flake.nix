@@ -24,9 +24,10 @@
     affinity-nix = {
       url = "github:mrshmllow/affinity-nix";
     };
+    millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, mango, musnix, solaar, affinity-nix, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, mango, musnix, solaar, affinity-nix, millennium, ... } @inputs:
 
  let
  system = "x86_64-linux";
@@ -53,6 +54,7 @@
       modules = [
         {
           environment.systemPackages = [affinity-nix.packages.x86_64-linux.v3];
+          nixpkgs.overlays = [ millennium.overlays.default ];
         }
         niri.nixosModules.niri
         nix-flatpak.nixosModules.nix-flatpak
@@ -61,7 +63,6 @@
         solaar.nixosModules.default
         ./configuration.nix
       ];
-
     };
   };
 }
