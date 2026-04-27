@@ -1,11 +1,10 @@
 {
   lib,
-  stdenv,
   fetchurl,
-  autoPatchelfHook,
-  dpkg,
   buildFHSEnv,
   writeShellScript,
+  dpkg,
+  stdenv,
   gtk3,
   glib,
   libGL,
@@ -48,6 +47,8 @@
   sqlite,
   curl,
   vulkan-loader,
+  libsoup_3,
+  gst_all_1,
 }:
 
 let
@@ -60,74 +61,32 @@ let
       hash = "sha256-oB/oY8xO/o+UOXR4K/yy0dAIrjB3ztBl9j24k9ceH5I=";
     };
 
-    nativeBuildInputs = [
-      autoPatchelfHook
-      dpkg
-    ];
+    nativeBuildInputs = [ dpkg ];
 
-    buildInputs = [
-      gtk3
-      glib
-      libGL
-      mesa
-      cairo
-      pango
-      gdk-pixbuf
-      atk
-      dbus
-      libx11
-      libxext
-      libxrender
-      libxtst
-      libxi
-      libxfixes
-      libxcb
-      libxcomposite
-      libxcursor
-      libxdamage
-      libxrandr
-      libxscrnsaver
-      alsa-lib
-      udev
-      nspr
-      nss
-      expat
-      cups
-      at-spi2-atk
-      at-spi2-core
-      libdrm
-      wayland
-      libxkbcommon
-      webkitgtk_4_1
-      openssl
-      zlib
-      libpng
-      libjpeg
-      freetype
-      fontconfig
-      sqlite
-      curl
-    ];
-
-    dontBuild = true;
-
+    # The default unpack phase doesn't handle .deb files;
+    # unpack manually with dpkg-deb.
     unpackPhase = ''
       dpkg-deb -x $src unpacked
     '';
 
+    # Prebuilt binary; there is nothing to compile.
+    dontBuild = true;
+
     installPhase = ''
       runHook preInstall
 
-      install -Dm755 unpacked/usr/bin/AnycubicSlicerNext $out/lib/anycubic-slicer-next/AnycubicSlicerNext
-
-      find unpacked -name '*.so' -o -name '*.so.*' | while read -r f; do
-        install -Dm755 "$f" $out/lib/anycubic-slicer-next/$(basename "$f")
-      done
+      install -Dm755 unpacked/usr/bin/AnycubicSlicerNext \
+        $out/bin/AnycubicSlicerNext
 
       mkdir -p $out/share
       cp -r unpacked/usr/share/AnycubicSlicerNext $out/share/AnycubicSlicerNext
 
-      # Extract icon - just take the first png/svg found (avoids case statement issues)
+      # Install bundled shared libraries so the FHS env can expose them
+      # under /usr/lib where the binary's hardcoded RPATHs expect them.
+      find unpacked -name '*.so' -o -name '*.so.*' | while read -r f; do
+        install -Dm755 "$f" $out/lib/$(basename "$f")
+      done
+
       iconFile=$(find unpacked -type f \( -name "*.png" -o -name "*.svg" \) -print -quit 2>/dev/null)
       if [ -n "$iconFile" ]; then
         mkdir -p $out/share/icons/hicolor/256x256/apps
@@ -140,7 +99,7 @@ let
     meta = {
       description = "G-code slicer for Anycubic 3D printers (unwrapped binary)";
       homepage = "https://wiki.anycubic.com/en/software-and-app/anycubic-slicer-next-linux";
-      license = lib.licenses.unfree;
+      license = lib.licenses.agpl3Only;
       sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
       platforms = [ "x86_64-linux" ];
       maintainers = with lib.maintainers; [ ];
@@ -190,6 +149,10 @@ let
     sqlite
     curl
     vulkan-loader
+    libsoup_3
+    gst_all_1.gstreamer
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-good
   ];
 
   launcherScript = writeShellScript "anycubic-slicer-next-launcher" ''
@@ -197,28 +160,29 @@ let
       export LD_LIBRARY_PATH=/run/opengl-driver/lib:$LD_LIBRARY_PATH
     fi
 
-    # Workaround for blank 3D preview on NVIDIA + Wayland
-    # Uses Zink (OpenGL-on-Vulkan) to avoid NVIDIA's GBM/EGL issues
-    if [ "''${XDG_SESSION_TYPE:-}" = "wayland" ] && [ -f /run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json ]; then
-      export __GLX_VENDOR_LIBRARY_NAME=mesa
-      export MESA_LOADER_DRIVER_OVERRIDE=zink
-      export GALLIUM_DRIVER=zink
-      export WEBKIT_DISABLE_DMABUF_RENDERER=1
-      if [ -f /run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json ]; then
-        export __EGL_VENDOR_LIBRARY_FILENAMES=/run/opengl-driver/share/glvnd/egl_vendor.d/50_mesa.json
-      fi
+    # NVIDIA + Wayland causes a silent crash on launch due to GBM/EGL issues.
+    # Fall back to XWayland by forcing X11 backends.
+    if [ "''${XDG_SESSION_TYPE:-}" = "wayland" ] \
+        && [ -f /run/opengl-driver/share/glvnd/egl_vendor.d/10_nvidia.json ]; then
+      unset WAYLAND_DISPLAY
+      export GDK_BACKEND=x11
+      export QT_QPA_PLATFORM=xcb
     fi
 
-    exec /lib/anycubic-slicer-next/AnycubicSlicerNext "$@"
+    exec ${unwrapped}/bin/AnycubicSlicerNext "$@"
   '';
 
 in
 buildFHSEnv {
   name = "anycubic-slicer-next";
 
+  # buildFHSEnv provides a standard FHS filesystem layout at runtime,
+  # which this Ubuntu-built binary requires to resolve its hardcoded
+  # library and resource paths.
   targetPkgs = _: runtimeLibs ++ [ unwrapped ];
 
   extraBwrapArgs = [
+    "--chdir" "/tmp"
     "--ro-bind"
     "${unwrapped}/share/AnycubicSlicerNext"
     "/usr/share/AnycubicSlicerNext"
@@ -227,14 +191,14 @@ buildFHSEnv {
   runScript = "${launcherScript}";
 
   extraInstallCommands = ''
-        mkdir -p $out/share/applications $out/share/icons/hicolor/256x256/apps
+    mkdir -p $out/share/applications $out/share/icons/hicolor/256x256/apps
 
-        if [ -f ${unwrapped}/share/icons/hicolor/256x256/apps/anycubic-slicer-next.png ]; then
-          cp ${unwrapped}/share/icons/hicolor/256x256/apps/anycubic-slicer-next.png \
-            $out/share/icons/hicolor/256x256/apps/
-        fi
+    if [ -f ${unwrapped}/share/icons/hicolor/256x256/apps/anycubic-slicer-next.png ]; then
+      cp ${unwrapped}/share/icons/hicolor/256x256/apps/anycubic-slicer-next.png \
+        $out/share/icons/hicolor/256x256/apps/
+    fi
 
-        cat > $out/share/applications/anycubic-slicer-next.desktop << EOF
+    cat > $out/share/applications/anycubic-slicer-next.desktop << EOF
     [Desktop Entry]
     Name=Anycubic Slicer Next
     Comment=G-code slicer for Anycubic 3D printers
@@ -251,7 +215,7 @@ buildFHSEnv {
     description = "G-code slicer for Anycubic 3D printers, based on OrcaSlicer";
     homepage = "https://wiki.anycubic.com/en/software-and-app/anycubic-slicer-next-linux";
     changelog = "https://wiki.anycubic.com/en/software-and-app/anycubic-slicer-next-linux";
-    license = lib.licenses.unfree;
+    license = lib.licenses.agpl3Only;
     sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
     platforms = [ "x86_64-linux" ];
     mainProgram = "anycubic-slicer-next";

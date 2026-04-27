@@ -229,8 +229,6 @@ in
     "org.gimp.GIMP"
     "com.anydesk.Anydesk"
     "com.github.iwalton3.jellyfin-media-player"
-    "com.sweethome3d.Sweethome3d"
-    "org.freecad.FreeCAD"
   ];
 
 #programs.firefox = {
