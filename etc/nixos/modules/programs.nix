@@ -25,6 +25,7 @@ let
       fi
     '';
   };
+  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.system};
 
 in
 
@@ -34,6 +35,7 @@ in
   nixpkgs.config.permittedInsecurePackages = [
     "qtwebengine-5.15.19"
     "mbedtls-2.28.10"
+    "ventoy-1.1.10"
   ];
   
   # Defined Programs
@@ -53,6 +55,8 @@ in
     zip
     jq
     libsecret
+    ventoy-full
+
 
     # FILES #
     gvfs
@@ -63,6 +67,7 @@ in
     pandoc
     texliveFull
     fsearch
+    pkgs-unstable.dsearch
     filezilla
     ffmpegthumbnailer
     zenity
@@ -111,7 +116,7 @@ in
     mpv
     feishin
     #(callPackage ./pkgs/feishin/default.nix {}) 
-    spotify
+    #spotify
     # jellyfin-media-player
     jellyfin-mpv-shim
 
@@ -171,7 +176,7 @@ in
     brightnessctl
     dmg2img
     cachix
-    rbw
+    pkgs-unstable.rbw
     pinentry-tty
     pkgs-unstable.kando
     gearlever
@@ -238,6 +243,17 @@ in
 services.hardware.openrgb = { 
   enable = true; 
   package = pkgs-unstable.openrgb-with-all-plugins; 
+};
+
+programs.spicetify = {
+  enable = true;
+  enabledExtensions = with spicePkgs.extensions; [
+    adblockify
+    hidePodcasts
+    shuffle # shuffle+ (special characters are sanitized out of extension names)
+  ];
+  #theme = spicePkgs.themes.sleek;
+  #colorScheme = "matugen";
 };
 
 virtualisation.docker.rootless = {

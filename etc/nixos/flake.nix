@@ -25,9 +25,10 @@
       url = "github:mrshmllow/affinity-nix";
     };
     millennium.url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, mango, musnix, solaar, affinity-nix, millennium, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, mango, musnix, solaar, affinity-nix, millennium, spicetify-nix, ... } @inputs:
 
  let
  system = "x86_64-linux";
@@ -61,6 +62,7 @@
         mango.nixosModules.mango
         musnix.nixosModules.musnix
         solaar.nixosModules.default
+        spicetify-nix.nixosModules.spicetify
         ./configuration.nix
       ];
     };
