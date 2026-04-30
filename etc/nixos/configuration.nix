@@ -7,8 +7,8 @@
 
 
 let
-  # TO-DO
-  user = "nicole";
+  username = "nicole";
+  userdesc = "Nicole";
 in
 
 
@@ -25,9 +25,16 @@ in
       ./modules/nvidia.nix
       ./modules/ld-fix.nix
       ./modules/programs.nix
+      ./modules/flatpak.nix
       ./modules/bluetooth.nix
       ./modules/KawaiCA49.nix
       ./modules/logitech.nix
+      ./modules/ollama.nix
+      ./modules/sound.nix
+      ./modules/xdg.nix
+      ./modules/gdm.nix
+      #./modules/gnome.nix
+      #./modules/kde.nix
       ./cachix.nix
     ];
 
@@ -41,8 +48,6 @@ in
 #░█▀▄░█░█░█░█░░█░░█░░░█░█░█▀█░█░█░█▀▀░█▀▄
 #░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀
   
-  #hardware.bluetooth.enable = true; # enables support for Bluetooth
-  #hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -135,10 +140,9 @@ in
 #░█░█░▀▀█░█▀▀░█▀▄
 #░▀▀▀░▀▀▀░▀▀▀░▀░▀
 
-
-  users.users.nicole = {
+  users.users.${username} = {
     isNormalUser = true;
-    description = "Nicole";
+    description = userdesc;
     extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" "cdrom" "uucp" "docker" "audio"];
     packages = with pkgs; [];
   };
@@ -150,88 +154,8 @@ in
     ];
   };
 
-#░█░█░█▀█░█▀▀░█▀▄░█▀▀░█▀▀
-#░█░█░█░█░█▀▀░█▀▄░█▀▀░█▀▀
-#░▀▀▀░▀░▀░▀░░░▀░▀░▀▀▀░▀▀▀
-  nixpkgs.config.allowUnfree = true;
-  #nixpkgs.config.cudaSupport = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-
-#░█░█░█▀▄░█▀▀
-#░▄▀▄░█░█░█░█
-#░▀░▀░▀▀░░▀▀▀
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-gnome
-    ];
-    config = {
-      common = {
-        default = [ "*" ];
-      };
-      niri = {
-        default = [
-          "gtk"
-          "gnome"
-        ];
-        "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
-        "org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
-      };
-    };
-  };
-
-
-
-#░█▀▀░█▀█░█░█░█▀█░█▀▄
-#░▀▀█░█░█░█░█░█░█░█░█
-#░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀░
-
-
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    audio.enable = true;
-    wireplumber.enable = true;
-    pulse.enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    jack.enable = true;
-  };
-
-  musnix.enable = true;
-
-  hardware.kawaiCA49 = {
-    enable = true;
-    user = "nicole";
-  };
-
-  # ISO mounting utils #
-  programs.cdemu.enable = true;
-  
-  # KDE Connect
-  programs.kdeconnect.enable = true;
-
-  # OLLAMA #
-  services.ollama = {
-    enable = true;
-    acceleration = "cuda";
-    package = pkgs-unstable.ollama-cuda;
-    environmentVariables = {
-      CUDA_VISIBLE_DEVICES = "0";
-      NVIDIA_VISIBLE_DEVICES = "all";
-      LD_LIBRARY_PATH = "${pkgs.cudaPackages.cudatoolkit}/lib:${pkgs.cudaPackages.cudatoolkit}/lib64";
-    };
-  };
-
-  # STEAM #
-  programs.steam.enable = true;
-  programs.steam.package = pkgs.millennium-steam;
-  programs.steam.gamescopeSession.enable = true;
-  programs.gamemode.enable =  true;
- 
   # DEFAULTS #
   environment = {
     sessionVariables = {
@@ -241,7 +165,6 @@ in
       LIBVIRT_DEFAULT_URI = "qemu:///system";
       NIXOS_OZONE_WL = "1";
     };
-    #etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool.json".source = ./50-limit-free-buffer-pool.json;
   };
 
   # Fonts with emojis uwu #
@@ -263,17 +186,20 @@ in
   system.stateVersion = "25.11";
   
   system.autoUpgrade = {
-    enable = true;
+    enable = false;
     flake = inputs.self.outPath;
     flags = [
       "--update-input"
       "nixpkgs"
-      "-L" # print build logs
+      "-L"
     ];
   dates = "02:00";
   randomizedDelaySec = "45min";
   };
 
-
+  hardware.kawaiCA49 = {
+    enable = true;
+    user = "nicole";
+  };
 }
 

@@ -1,6 +1,3 @@
-#░█▀█░█▀█░█▀▀░█░█░█▀█░█▀▀░█▀▀░█▀▀
-#░█▀▀░█▀█░█░░░█▀▄░█▀█░█░█░█▀▀░▀▀█
-#░▀░░░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀
 {config, pkgs, pkgs-unstable, lib, inputs, ... }:
 
 let
@@ -30,8 +27,11 @@ let
 in
 
 {
-  
-  # RISKY, REMOVE ASAP ###
+#░█▀█░█▀█░█▀▀░█░█░█▀█░█▀▀░█▀▀░█▀▀
+#░█▀▀░█▀█░█░░░█▀▄░█▀█░█░█░█▀▀░▀▀█
+#░▀░░░▀░▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀▀▀░▀▀▀
+
+  nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
     "qtwebengine-5.15.19"
     "mbedtls-2.28.10"
@@ -76,7 +76,6 @@ in
     # SCREENSHOTS AND RECORDING #
     grim
     slurp
-    #swappy
     satty
     wl-clipboard
     obs-studio
@@ -95,7 +94,6 @@ in
     rofi
     libnotify
     wayvnc
-    #pkgs-unstable.xwayland-satellite
     (callPackage ./pkgs/xwayland-satellite/default.nix {}) 
     xwayland-run
 
@@ -115,21 +113,15 @@ in
     ffmpeg
     mpv
     feishin
-    #(callPackage ./pkgs/feishin/default.nix {}) 
-    #spotify
-    # jellyfin-media-player
     jellyfin-mpv-shim
 
     # INTERNET #
-    #pkgs-unstable.telegram-desktop
     pkgs-unstable._64gram
     element-desktop
     wasistlos
     vesktop
-    #geary
     pkgs-unstable.mailspring
     pkgs-unstable.thunderbird
-    #tutanota-desktop
     pkgs-unstable.protonmail-desktop
     teams-for-linux
     qbittorrent
@@ -152,11 +144,8 @@ in
     # GAMING #
     mangohud
     lutris
-    #heroic
-    #protonup-qt
     pkgs-unstable.protonplus
     gdlauncher-carbon
-    #adwsteamgtk
     lug-helper
 
     # OTHERS #
@@ -189,13 +178,8 @@ in
 
     # AI #
     (callPackage ./pkgs/msty/default.nix {}) 
-    #pkgs-unstable.jan
-    #claude-code
     pkgs-unstable.lmstudio
-    #(inputs.opencode.packages.${system}.default)
     pkgs-unstable.opencode
-    #pkgs-unstable.codex
-    #pkgs-unstable.gemini-cli
 
     # AUDIO AND DAW#
     helvum
@@ -204,16 +188,10 @@ in
     bitwig-studio
     yabridge
     yabridgectl
-    # alsa-scarlett-gui
-    # qjackctl
     alsa-utils
-    #vital
-    #(callPackage ./pkgs/vital-stable/default.nix {})
 
     # WINE #
     wineWowPackages.stable
-    #wineWowPackages.waylandFull
-    #wineWowPackages.staging
     winetricks
     bottles
 
@@ -222,44 +200,41 @@ in
     (callPackage ./pkgs/anycubic-slicer-next/default.nix {})
   ];
 
-  # Enable Flaktpak
-  services.flatpak.enable = true;
-  services.flatpak.packages = [
-    "com.github.tchx84.Flatseal"
-    "org.pitivi.Pitivi"
-    "app.zen_browser.zen"
-    "org.blender.Blender"
-    "org.onlyoffice.desktopeditors"
-    "com.rustdesk.RustDesk"
-    "org.gimp.GIMP"
-    "com.anydesk.Anydesk"
-    "com.github.iwalton3.jellyfin-media-player"
-  ];
+  # STEAM #
+  programs.steam.enable = true;
+  programs.steam.package = pkgs.millennium-steam;
+  programs.steam.gamescopeSession.enable = true;
+  programs.gamemode.enable =  true;
 
-#programs.firefox = {
-#  enable = true;
-#};
+  # ISO mounting utils #
+  programs.cdemu.enable = true;
+  
+  # KDE Connect
+  programs.kdeconnect.enable = true;
 
-services.hardware.openrgb = { 
-  enable = true; 
-  package = pkgs-unstable.openrgb-with-all-plugins; 
-};
-
-programs.spicetify = {
-  enable = true;
-  enabledExtensions = with spicePkgs.extensions; [
-    adblockify
-    hidePodcasts
-    shuffle # shuffle+ (special characters are sanitized out of extension names)
-  ];
-  #theme = spicePkgs.themes.sleek;
-  #colorScheme = "matugen";
-};
-
-virtualisation.docker.rootless = {
-  enable = true;
-  setSocketVariable = true;
-};
+  # OPENRGB #
+  services.hardware.openrgb = { 
+    enable = true; 
+    package = pkgs-unstable.openrgb-with-all-plugins; 
+  };
+  
+  # SPICETIFY #
+  programs.spicetify = {
+    enable = true;
+    enabledExtensions = with spicePkgs.extensions; [
+      adblockify
+      hidePodcasts
+      shuffle # shuffle+ (special characters are sanitized out of extension names)
+    ];
+    #theme = spicePkgs.themes.sleek;
+    #colorScheme = "matugen";
+  };
+  
+  # DOCKER #
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
 
   security.pam.loginLimits = [{
     domain = "nicole";
