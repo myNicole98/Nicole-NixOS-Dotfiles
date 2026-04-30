@@ -35,7 +35,7 @@ in
       ./modules/gdm.nix
       #./modules/gnome.nix
       #./modules/kde.nix
-      #./modules/hyprland.nix
+      ./modules/hyprland.nix
       ./modules/niri.nix
       ./cachix.nix
     ];
@@ -201,7 +201,7 @@ in
 
   hardware.kawaiCA49 = {
     enable = true;
-    user = "nicole";
+    user = username;
   };
 }
 
