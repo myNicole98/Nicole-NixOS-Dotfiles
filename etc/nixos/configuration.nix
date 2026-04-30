@@ -35,6 +35,8 @@ in
       ./modules/gdm.nix
       #./modules/gnome.nix
       #./modules/kde.nix
+      #./modules/hyprland.nix
+      ./modules/niri.nix
       ./cachix.nix
     ];
 
