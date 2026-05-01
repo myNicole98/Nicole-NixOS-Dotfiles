@@ -201,9 +201,11 @@ in
   ];
 
   # STEAM #
-  programs.steam.enable = true;
-  programs.steam.package = pkgs.millennium-steam;
-  programs.steam.gamescopeSession.enable = true;
+  programs.steam = {
+    enable = true;
+    package = pkgs.millennium-steam;
+    #gamescopeSession.enable = true;
+  };
   programs.gamemode.enable =  true;
 
   # ISO mounting utils #
