@@ -180,6 +180,7 @@ in
     (callPackage ./pkgs/msty/default.nix {}) 
     pkgs-unstable.lmstudio
     pkgs-unstable.opencode
+    #inputs.opencode.packages.${pkgs.system}.default
 
     # AUDIO AND DAW#
     helvum
