@@ -54,6 +54,7 @@ in
   
   services.blueman.enable = true;
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.consoleMode = "max";
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot = {
@@ -79,9 +80,9 @@ in
     };
 
     kernelPackages = pkgs.linuxPackages_zen;
+    #kernelPackages = pkgs.linuxPackages;
 
     loader.timeout = 0;
-    loader.systemd-boot.consoleMode = "auto";
     
     # Add a midi bridge for BLE MIDI devices
     kernelModules = [ "snd-virmidi" ];
@@ -187,7 +188,7 @@ in
   environment.sessionVariables.NAUTILUS_4_EXTENSION_DIR = "${config.system.path}/lib/nautilus/extensions-4";
 
   
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
   
   system.autoUpgrade = {
     enable = false;

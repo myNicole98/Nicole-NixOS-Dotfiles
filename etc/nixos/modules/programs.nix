@@ -35,7 +35,7 @@ in
   nixpkgs.config.permittedInsecurePackages = [
     "qtwebengine-5.15.19"
     "mbedtls-2.28.10"
-    "ventoy-1.1.10"
+    "electron-39.8.10" #EOL package, remove once all dependencies are updated
   ];
   
   # Defined Programs
@@ -55,7 +55,6 @@ in
     zip
     jq
     libsecret
-    ventoy-full
 
 
     # FILES #
@@ -77,6 +76,7 @@ in
     grim
     slurp
     satty
+    pkgs-unstable.gradia
     wl-clipboard
     obs-studio
 
@@ -107,7 +107,7 @@ in
 
     # MEDIA EDITING #
     pinta
-    pkgs-unstable.davinci-resolve
+    #pkgs-unstable.davinci-resolve
 
     # MEDIA #
     ffmpeg
@@ -118,14 +118,16 @@ in
     # INTERNET #
     pkgs-unstable._64gram
     element-desktop
-    wasistlos
+    karere
     vesktop
-    pkgs-unstable.mailspring
+    mailspring
     pkgs-unstable.thunderbird
     pkgs-unstable.protonmail-desktop
     teams-for-linux
     qbittorrent
+    webtorrent_desktop
     sunshine 
+    helium
     
     # DEV #
     vscode-fhs
@@ -140,13 +142,16 @@ in
     uv
     nodejs_24
     dbgate
+    zulu8
 
     # GAMING #
     mangohud
     lutris
     pkgs-unstable.protonplus
     gdlauncher-carbon
+    prismlauncher
     lug-helper
+    libxrender # stuff for older java versions
 
     # OTHERS #
     seahorse
@@ -157,6 +162,8 @@ in
     gnomeExtensions.appindicator
     pywalfox-native
     linux-wallpaperengine
+    libsForQt5.qt5ct
+    kdePackages.qt6ct
 
     # UTILS #
     monitorets
@@ -183,16 +190,16 @@ in
     #inputs.opencode.packages.${pkgs.system}.default
 
     # AUDIO AND DAW#
-    helvum
+    crosspipe
     reaper
     a2jmidid
-    bitwig-studio
+    #pkgs-unstable.bitwig-studio
     yabridge
     yabridgectl
     alsa-utils
 
     # WINE #
-    wineWowPackages.stable
+    wineWow64Packages.stable
     winetricks
     bottles
 
@@ -210,7 +217,7 @@ in
   programs.gamemode.enable =  true;
 
   # ISO mounting utils #
-  programs.cdemu.enable = true;
+  #programs.cdemu.enable = true;
   
   # KDE Connect
   programs.kdeconnect.enable = true;

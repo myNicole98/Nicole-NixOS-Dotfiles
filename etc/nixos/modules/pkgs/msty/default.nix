@@ -2,7 +2,6 @@
   appimageTools,
   fetchurl,
   nodejs,
-  nodePackages,
   uv,
   python3,
   makeWrapper,
@@ -11,16 +10,17 @@
   version = "2.6.4";
   src = fetchurl {
     url = "https://next-assets.msty.studio/app/releases/2.6.4/linux/MstyStudio_x86_64.AppImage";
-    sha256 = "sha256-tCtQdmsC2s/IXvoLcHUTy1gEt78K4nIJ6hQCbzD+mjU=";
+    sha256 = "sha256-cY4PL2l4+leDC/30VkmCL4KoVSC1slgqY0KGfsjUuhE=";
   };
   appimageContents = appimageTools.extractType2 {inherit pname version src;};
+  
+  npm = nodejs; 
 in
   appimageTools.wrapType2 {
     inherit pname version src;
     nativeBuildInputs = [makeWrapper];
     extraPkgs = pkgs: [
       nodejs
-      nodePackages.npm
       uv
       python3
     ];
@@ -31,6 +31,6 @@ in
       install -m 444 -D ${appimageContents}/MstyStudio.png \
               $out/share/icons/hicolor/256x256/apps/MstyStudio.png
               wrapProgram $out/bin/${pname} \
-                      --prefix PATH : ${nodejs}/bin:${nodePackages.npm}/bin:${uv}/bin:${python3}/bin
+                      --prefix PATH : ${nodejs}/bin:${uv}/bin:${python3}/bin
     '';
   }

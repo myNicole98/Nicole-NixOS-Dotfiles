@@ -3,7 +3,6 @@
   # OLLAMA #
   services.ollama = {
     enable = true;
-    acceleration = "cuda";
     package = pkgs-unstable.ollama-cuda;
     environmentVariables = {
       CUDA_VISIBLE_DEVICES = "0";
