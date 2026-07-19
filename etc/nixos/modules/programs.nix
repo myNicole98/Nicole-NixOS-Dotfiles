@@ -177,6 +177,7 @@ in
     pkgs-unstable.kando
     gearlever
     bitwarden-desktop
+    espanso-wayland
     
     # CUDA #
     cudaPackages.cudatoolkit
