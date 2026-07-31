@@ -99,6 +99,8 @@ in
   networking.hostName = "nixos";
   networking.networkmanager = {
     enable = true;
+    wifi.powersave = false;
+    wifi.backend = "wpa_supplicant";
     plugins = with pkgs; [
       networkmanager-openvpn
     ];

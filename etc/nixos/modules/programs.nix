@@ -94,7 +94,8 @@ in
     rofi
     libnotify
     wayvnc
-    (callPackage ./pkgs/xwayland-satellite/default.nix {}) 
+    #(callPackage ./pkgs/xwayland-satellite/default.nix {}) 
+    xwayland-satellite
     xwayland-run
 
     # OFFICE #
@@ -104,6 +105,8 @@ in
     gnome-text-editor
     gnome-calculator
     simple-scan
+    vdirsyncer
+    khal
 
     # MEDIA EDITING #
     pinta
