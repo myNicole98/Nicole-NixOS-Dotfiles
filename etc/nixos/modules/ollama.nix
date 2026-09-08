@@ -3,7 +3,7 @@
   # OLLAMA #
   services.ollama = {
     enable = true;
-    #package = ollama-cuda;
+    package = pkgs.ollama-cuda;
     environmentVariables = {
       CUDA_VISIBLE_DEVICES = "0";
       NVIDIA_VISIBLE_DEVICES = "all";

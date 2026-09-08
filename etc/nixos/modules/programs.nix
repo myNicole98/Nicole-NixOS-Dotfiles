@@ -110,6 +110,7 @@ in
 
     # MEDIA EDITING #
     pinta
+    pkgs-unstable.darktable
     #pkgs-unstable.davinci-resolve
 
     # MEDIA #
@@ -181,6 +182,10 @@ in
     gearlever
     bitwarden-desktop
     espanso-wayland
+    fuse2
+    android-tools
+    exiftool
+    libinput
     
     # CUDA #
     cudaPackages.cudatoolkit
@@ -189,8 +194,9 @@ in
 
     # AI #
     (callPackage ./pkgs/msty/default.nix {}) 
-    pkgs-unstable.lmstudio
+    #lmstudio
     pkgs-unstable.opencode
+    tesseract
     #inputs.opencode.packages.${pkgs.system}.default
 
     # AUDIO AND DAW#
@@ -222,7 +228,7 @@ in
 
   # ISO mounting utils #
   #programs.cdemu.enable = true;
-  
+
   # KDE Connect
   programs.kdeconnect.enable = true;
 
@@ -242,6 +248,12 @@ in
     ];
     #theme = spicePkgs.themes.sleek;
     #colorScheme = "matugen";
+  };
+
+  # APPIMAGES #
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
   };
   
   # DOCKER #

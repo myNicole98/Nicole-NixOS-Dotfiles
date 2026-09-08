@@ -30,6 +30,7 @@ in
       ./modules/KawaiCA49.nix
       ./modules/logitech.nix
       ./modules/ollama.nix
+      ./modules/llamacpp.nix
       ./modules/sound.nix
       ./modules/xdg.nix
       ./modules/gdm.nix
@@ -150,7 +151,7 @@ in
   users.users.${username} = {
     isNormalUser = true;
     description = userdesc;
-    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" "cdrom" "uucp" "docker" "audio"];
+    extraGroups = [ "networkmanager" "wheel" "libvrtd" "kvm" "qemu-libvirtd" "cdrom" "uucp" "docker" "audio" "input"];
     packages = with pkgs; [];
   };
 

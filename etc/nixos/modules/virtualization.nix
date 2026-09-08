@@ -70,6 +70,10 @@ in
     };
   };
 
+  virtualisation.waydroid = {
+    enable = true;
+    package = pkgs.waydroid-nftables;
+  };
   
   # Add additional QEMU configuration to explicitly define device ACLs
   virtualisation.libvirtd.qemu.verbatimConfig = ''
