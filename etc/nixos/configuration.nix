@@ -28,7 +28,6 @@ in
       ./modules/flatpak.nix
       ./modules/bluetooth.nix
       ./modules/KawaiCA49.nix
-      ./modules/logitech.nix
       ./modules/ollama.nix
       ./modules/llamacpp.nix
       ./modules/sound.nix
@@ -53,7 +52,7 @@ in
 #░█▀▄░█░█░█░█░░█░░█░░░█░█░█▀█░█░█░█▀▀░█▀▄
 #░▀▀░░▀▀▀░▀▀▀░░▀░░▀▀▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀
   
-  services.blueman.enable = true;
+  services.blueman.enable = false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.consoleMode = "max";
   boot.loader.efi.canTouchEfiVariables = true;
@@ -193,18 +192,6 @@ in
   
   system.stateVersion = "26.05";
   
-  system.autoUpgrade = {
-    enable = false;
-    flake = inputs.self.outPath;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "-L"
-    ];
-  dates = "02:00";
-  randomizedDelaySec = "45min";
-  };
-
   hardware.kawaiCA49 = {
     enable = true;
     user = username;

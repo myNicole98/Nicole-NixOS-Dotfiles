@@ -55,10 +55,12 @@ in
     zip
     jq
     libsecret
+    sshfs
+    translate-shell
 
 
     # FILES #
-    gvfs
+    #gvfs
     nautilus
     nautilus-python
     nautilus-open-any-terminal
@@ -78,7 +80,7 @@ in
     satty
     pkgs-unstable.gradia
     wl-clipboard
-    obs-studio
+    obs-do
 
     # HYPRLAND RELATED #
     hyprpaper
@@ -100,13 +102,12 @@ in
 
     # OFFICE #
     obsidian
-    nextcloud-client
+    #nextcloud-client
+    pkgs-unstable.opencloud-desktop
     xournalpp
     gnome-text-editor
     gnome-calculator
     simple-scan
-    vdirsyncer
-    khal
 
     # MEDIA EDITING #
     pinta
@@ -117,6 +118,7 @@ in
     ffmpeg
     mpv
     feishin
+    (callPackage ./pkgs/sung/default.nix {}) 
     jellyfin-mpv-shim
 
     # INTERNET #
@@ -168,6 +170,7 @@ in
     linux-wallpaperengine
     libsForQt5.qt5ct
     kdePackages.qt6ct
+    kdePackages.kio-extras
 
     # UTILS #
     monitorets
@@ -177,15 +180,17 @@ in
     dmg2img
     cachix
     pkgs-unstable.rbw
+    pkgs-unstable.bitwarden-cli
     pinentry-tty
     pkgs-unstable.kando
     gearlever
     bitwarden-desktop
     espanso-wayland
-    fuse2
+    #fuse2
     android-tools
     exiftool
     libinput
+    pkgs-unstable.solaar
     
     # CUDA #
     cudaPackages.cudatoolkit
@@ -216,6 +221,24 @@ in
     # CAD&3D #
     orca-slicer-fixed
     (callPackage ./pkgs/anycubic-slicer-next/default.nix {})
+
+    # EMULATORS #
+    mgba
+
+    # ARTCRAFT SUITE #
+    photocraft
+    vectorcraft
+    filmcraft
+    lightcraft
+    pdfcraft
+    effectcraft
+    designcraft
+    cadcraft
+    deckcraft
+    gridcraft
+    wordcraft
+    soundcraft
+    figcraft
   ];
 
   # STEAM #
@@ -231,6 +254,13 @@ in
 
   # KDE Connect
   programs.kdeconnect.enable = true;
+
+  # FS Utils #
+  services.gvfs.enable = true;
+  programs.fuse = {
+    enable = true;
+    userAllowOther = true;
+  };
 
   # OPENRGB #
   services.hardware.openrgb = { 
@@ -257,9 +287,17 @@ in
   };
   
   # DOCKER #
-  virtualisation.docker.rootless = {
+  virtualisation.docker = {
     enable = true;
-    setSocketVariable = true;
+    #setSocketVariable = true;
+  };
+
+  # OBS STUDIO #
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs; [
+      obs-studio-plugins.obs-websocket
+    ];
   };
 
   security.pam.loginLimits = [{
