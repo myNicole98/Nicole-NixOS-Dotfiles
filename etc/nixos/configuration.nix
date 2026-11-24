@@ -37,6 +37,7 @@ in
       #./modules/kde.nix
       ./modules/hyprland.nix
       ./modules/niri.nix
+      ./modules/rust.nix
       ./cachix.nix
     ];
 

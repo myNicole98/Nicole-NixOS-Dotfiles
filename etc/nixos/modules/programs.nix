@@ -41,7 +41,7 @@ in
   # Defined Programs
   environment.systemPackages = with pkgs; [
     # TERM UTILS #
-    neovim
+    #neovim
     kitty
     wget
     git
@@ -57,6 +57,8 @@ in
     libsecret
     sshfs
     translate-shell
+    dnsutils
+    pciutils
 
 
     # FILES #
@@ -68,7 +70,7 @@ in
     pandoc
     texliveFull
     fsearch
-    pkgs-unstable.dsearch
+    pkgs-unstable.dux-search
     filezilla
     ffmpegthumbnailer
     zenity
@@ -102,8 +104,8 @@ in
 
     # OFFICE #
     obsidian
-    #nextcloud-client
-    pkgs-unstable.opencloud-desktop
+    nextcloud-client
+    #pkgs-unstable.opencloud-desktop
     xournalpp
     gnome-text-editor
     gnome-calculator
@@ -128,6 +130,7 @@ in
     vesktop
     mailspring
     pkgs-unstable.thunderbird
+    pkgs-unstable.aerion
     pkgs-unstable.protonmail-desktop
     teams-for-linux
     qbittorrent
@@ -136,7 +139,8 @@ in
     helium
     
     # DEV #
-    vscode-fhs
+    #vscode-fhs
+    vscodium-fhs
     nixd
     nil
     pkgs-unstable.zed-editor
@@ -171,6 +175,7 @@ in
     libsForQt5.qt5ct
     kdePackages.qt6ct
     kdePackages.kio-extras
+    qt6.qtwebsockets
 
     # UTILS #
     monitorets
@@ -186,11 +191,11 @@ in
     gearlever
     bitwarden-desktop
     espanso-wayland
-    #fuse2
     android-tools
     exiftool
     libinput
     pkgs-unstable.solaar
+    baobab
     
     # CUDA #
     cudaPackages.cudatoolkit
@@ -199,10 +204,11 @@ in
 
     # AI #
     (callPackage ./pkgs/msty/default.nix {}) 
-    #lmstudio
+    lmstudio
     pkgs-unstable.opencode
+    pkgs-unstable.deepseek-harness
+    pkgs-unstable.pi-coding-agent
     tesseract
-    #inputs.opencode.packages.${pkgs.system}.default
 
     # AUDIO AND DAW#
     crosspipe
@@ -294,6 +300,11 @@ in
 
   # OBS STUDIO #
   programs.obs-studio = {
+    package = (
+      pkgs.obs-studio.override {
+        cudaSupport = true;
+      }
+    );
     enable = true;
     plugins = with pkgs; [
       obs-studio-plugins.obs-websocket

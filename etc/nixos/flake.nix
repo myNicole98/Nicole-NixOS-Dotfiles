@@ -8,7 +8,6 @@
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    opencode.url = "github:sst/opencode";
     musnix.url = "github:musnix/musnix";
     affinity-nix.url = "github:mrshmllow/affinity-nix";
     millennium.url = "github:SteamClientHomebrew/Millennium/next?dir=packages/nix";
@@ -16,13 +15,12 @@
     helium.url = "github:schembriaiden/helium-browser-nix-flake";
     artcraft.url = "github:Hy4ri/artcraft-flake";
 
-    # --- moved over from the home-manager flake ---
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dux-shell = {
-      url = "github:duxlabs-dev/dux-shell";
+      url = "github:duxlabs-dev/dux-shell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     dgop = {
@@ -41,11 +39,13 @@
         home-manager.follows = "home-manager";
       };
     };
+    lazyvim.url = "github:pfassina/lazyvim-nix";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, nix-flatpak, niri, musnix,
-              affinity-nix, millennium, spicetify-nix, opencode, helium,
-              artcraft, home-manager, dux-shell, nix-monitor, ... } @inputs:
+              affinity-nix, millennium, spicetify-nix, helium,
+              artcraft, home-manager, dux-shell, nix-monitor, lazyvim, 
+               ... } @inputs:
   let
     system = "x86_64-linux";
     pkgs-unstable = import nixpkgs-unstable { inherit system; config.allowUnfree = true; };

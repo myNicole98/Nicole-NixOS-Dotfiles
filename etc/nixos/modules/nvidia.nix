@@ -36,10 +36,18 @@ in
       #  useSettings = false;
       #};
 
+      #package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      #  version = "610.57.04";
+      #  sha256_64bit = "sha256-suk1xmuDuwDAyFe8jg7g/VLekoa0DJzB7sKafOfrEW0=";
+      #  openSha256 = "sha256-rQHOOOY4KL92Ww3KDwh+j4eGU7oNAH8LutZC5wmFnPo=";
+      #  usePersistenced = false;
+      #  useSettings = false;
+      #};
+      
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-        version = "610.57.04";
-        sha256_64bit = "sha256-suk1xmuDuwDAyFe8jg7g/VLekoa0DJzB7sKafOfrEW0=";
-        openSha256 = "sha256-rQHOOOY4KL92Ww3KDwh+j4eGU7oNAH8LutZC5wmFnPo=";
+        version = "615.78.08";
+        sha256_64bit = "sha256-Pj9t3cLudnoIGFMAr3vjyyhuznZpjS3eNSRZl4LQf/4=";
+        openSha256 = "sha256-HBINiOjL0ZJLIAJeNIBYHBnwgUXtNwPPtnFpAI1YwF4=";
         usePersistenced = false;
         useSettings = false;
       };
@@ -55,6 +63,29 @@ in
         "CUDA_CACHE_PATH" = "/home/nicole/.cache/nv";
       };
       #etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool.json".source = ./50-limit-free-buffer-pool.json;
+    etc."nvidia/nvidia-application-profiles-rc.d/50-limit-free-buffer-pool-in-wayland-compositors.json".text =
+      builtins.toJSON {
+        rules = [
+          {
+            pattern = {
+              feature = "procname";
+              matches = "niri";
+            };
+            profile = "Limit Free Buffer Pool On Wayland Compositors";
+          }
+        ];
+        profiles = [
+          {
+            name = "Limit Free Buffer Pool On Wayland Compositors";
+            settings = [
+              {
+                key = "GLVidHeapReuseRatio";
+                value = 0;
+              }
+            ];
+          }
+        ];
+      };
     };
 }
 
